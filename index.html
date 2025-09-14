@@ -219,7 +219,6 @@
             cursor: pointer;
             opacity: 0.7;
             transition: opacity 0.3s;
-            z-index: 2;
         }
         
         .password-toggle:hover {
@@ -926,7 +925,6 @@
         .social-user {
             font-weight: 700;
             color: var(--amazigh-yellow);
-            font-size: 0.9rem;
         }
         
         .social-date {
@@ -1459,7 +1457,7 @@
         
         // Configuración de Supabase
         let supabaseConfig = {
-            url: 'https://wxwhzxdyxeesbvxxmtpx.supabase.co',
+            url: 'https://https://amazigh-gamma.vercel.app/',
             key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4d2h6eGR5eGVlc2J2eHhtdHB4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3Nzk2NjUsImV4cCI6MjA3MzM1NTY2NX0.yku_FjaK6Y0NO3jV8a_YkYR3KKdvBaIJW32acoYBP8o',
             enabled: false
         };
@@ -1480,14 +1478,12 @@
                         supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
                         supabaseConfig.enabled = true;
                         console.log('Supabase inicializado correctamente');
-                        return true;
                     }
                 }
             } catch (error) {
                 console.error('Error inicializando Supabase:', error);
-                showToast('Error inicializando Supabase: ' + error.message);
+                showToast('Error inicializando Supabase');
             }
-            return false;
         }
 
         // Función para crear partículas flotantes
@@ -1651,7 +1647,7 @@
             
             try {
                 if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la sección de cuenta.');
+                    throw new Error('Supabase no configurado');
                 }
                 
                 // Registrar usuario en Auth de Supabase
@@ -1771,7 +1767,7 @@
             
             try {
                 if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la sección de cuenta.');
+                    throw new Error('Supabase no configurado');
                 }
                 
                 // Iniciar sesión con Supabase Auth
@@ -2359,7 +2355,7 @@
         async function checkSession() {
             try {
                 // Inicializar Supabase primero
-                const supabaseInitialized = initSupabase();
+                initSupabase();
                 
                 // Si Supabase está configurado, verificar sesión
                 if (supabaseConfig.enabled) {
@@ -2736,7 +2732,7 @@
                 "login_required": "يجب تسجيل الدخول لنشر الرسائل",
                 "registration_error": "خطأ في التسجيل. يرجى المحاولة مرة أخرى.",
                 "email_exists": "هذا البريد الإلكتروني مسجل بالفعل",
-                "login_error": "البريد الإلكتروني или كلمة المرور غير صحيحة",
+                "login_error": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
                 "save_changes": "تم حفظ التغييرات",
                 "save_error": "خطأ في الحفظ",
                 "active": "نشط",
