@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RifRifanCoin - Confirmación de Cuenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --amazigh-blue: #1a5f7a;
+            --amazigh-green: #2a9d8f;
+            --amazigh-yellow: #e9c46a;
+            --amazigh-dark: #264653;
+            --amazigh-light: #f4f1de;
+            --amazigh-accent: #e76f51;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--amazigh-dark), var(--amazigh-blue));
+            color: var(--amazigh-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(38, 70, 83, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(42, 157, 143, 0.3);
+        }
+        
+        .logo-header {
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(90deg, var(--amazigh-blue), var(--amazigh-green));
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--amazigh-yellow);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--amazigh-yellow), #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            color: var(--amazigh-light);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .confirmation-content {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .confirmation-icon {
+            font-size: 4rem;
+            color: var(--amazigh-green);
+            margin-bottom: 20px;
+        }
+        
+        .confirmation-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--amazigh-yellow);
+        }
+        
+        .confirmation-message {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--amazigh-green), #27ae60);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(42, 157, 143, 0.7);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--amazigh-green);
+            color: var(--amazigh-light);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(42, 157, 143, 0.2);
+        }
+        
+        .troubleshooting {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .troubleshooting h3 {
+            color: var(--amazigh-yellow);
+            margin-bottom: 15px;
+        }
+        
+        .troubleshooting ul {
+            padding-left: 20px;
+        }
+        
+        .troubleshooting li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .success-checkmark {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: var(--amazigh-green);
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .success-checkmark:after {
+            content: "";
+            position: absolute;
+            left: 22px;
+            top: 35px;
+            width: 25px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 0 4px 4px;
+            transform: rotate(-45deg);
+        }
+        
+        .config-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(233, 196, 106, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .logo-header {
+                padding: 20px;
+            }
+            
+            .confirmation-content {
+                padding: 20px;
+            }
+            
+            .confirmation-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-header">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <h1>RifRifanCoin</h1>
+            </div>
+            <div class="tagline">Imariren n uẓawan amazigh</div>
+        </div>
+        
+        <div class="confirmation-content">
+            <div class="success-checkmark"></div>
+            <h2 class="confirmation-title">¡Cuenta Confirmada Exitosamente!</h2>
+            <p class="confirmation-message">
+                Tu dirección de correo electrónico ha sido verificada correctamente. 
+                Ahora puedes iniciar sesión en tu cuenta y comenzar a usar RifRifanCoin.
+            </p>
+            
+            <div>
+                <button class="btn" id="login-btn">Iniciar Sesión</button>
+                <button class="btn btn-outline" id="help-btn">Ayuda</button>
+            </div>
+            
+            <div class="config-info">
+                <p><strong>Configuración detectada:</strong></p>
+                <p>URL: https://amazigh-gamma.vercel.app</p>
+                <p>Esta URL está correctamente configurada para Supabase.</p>
+            </div>
+            
+            <div class="troubleshooting" id="help-section" style="display: none;">
+                <h3>¿Problemas para iniciar sesión?</h3>
+                <ul>
+                    <li>Asegúrate de estar usando el mismo correo electrónico que registraste</li>
+                    <li>Verifica que estés ingresando la contraseña correcta</li>
+                    <li>Si olvidaste tu contraseña, utiliza la opción "Recuperar contraseña"</li>
+                    <li>Espera unos minutos después de confirmar tu cuenta antes de intentar iniciar sesión</li>
+                    <li>Si los problemas persisten, contacta con nuestro soporte técnico</li>
+                </ul>
+                
+                <h3>Configuración de Supabase</h3>
+                <p>Asegúrate de que en el dashboard de Supabase tengas configuradas estas URLs:</p>
+                <ul>
+                    <li><strong>Site URL:</strong> https://amazigh-gamma.vercel.app</li>
+                    <li><strong>Redirect URLs:</strong> https://amazigh-gamma.vercel.app/imdokar.html</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            
+            // Mostrar mensajes específicos si existen en la URL
+            if (message === 'confirmed') {
+                document.querySelector('.confirmation-title').textContent = '¡Cuenta Confirmada!';
+                document.querySelector('.confirmation-message').textContent = 
+                    'Tu dirección de correo electrónico ha sido verificada correctamente. Ahora puedes iniciar sesión.';
+            } else if (message === 'error') {
+                document.querySelector('.success-checkmark').style.backgroundColor = '#e74c3c';
+                document.querySelector('.success-checkmark').innerHTML = '<i class="fas fa-times" style="color: white; font-size: 3rem; line-height: 80px;"></i>';
+                document.querySelector('.confirmation-title').textContent = 'Error de Confirmación';
+                document.querySelector('.confirmation-message').textContent = 
+                    'Hubo un problema al confirmar tu cuenta. Por favor, intenta nuevamente o contacta con soporte.';
+            }
+            
+            // Botón de inicio de sesión
+            document.getElementById('login-btn').addEventListener('click', function() {
+                // Redirigir a la página de inicio de sesión
+                window.location.href = 'https://amazigh-gamma.vercel.app/imdokar.html';
+            });
+            
+            // Botón de ayuda
+            document.getElementById('help-btn').addEventListener('click', function() {
+                const helpSection = document.getElementById('help-section');
+                if (helpSection.style.display === 'none') {
+                    helpSection.style.display = 'block';
+                    this.textContent = 'Ocultar Ayuda';
+                } else {
+                    helpSection.style.display = 'none';
+                    this.textContent = 'Ayuda';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
