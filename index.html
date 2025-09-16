@@ -2,8 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://*.supabase.co 'unsafe-eval' 'unsafe-inline'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RifRifanCoin - Plataforma Amazigh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -23,7 +22,6 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
         
         body {
@@ -34,77 +32,22 @@
             align-items: center;
             justify-content: center;
             padding: 15px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: rgba(233, 196, 106, 0.4);
-            border-radius: 50%;
-            animation: float 15s linear infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
         
         .container {
             width: 100%;
             max-width: 500px;
-            height: 90vh;
-            min-height: 600px;
             background: var(--card-bg);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            position: relative;
             border: 1px solid rgba(42, 157, 143, 0.3);
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .auth-screen {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow-y: auto;
         }
         
         .logo-header {
             padding: 20px 15px;
             text-align: center;
             background: linear-gradient(90deg, var(--amazigh-blue), var(--amazigh-green));
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .logo-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(233, 196, 106, 0.1) 0%, rgba(233, 196, 106, 0) 70%);
-            transform: rotate(30deg);
         }
         
         .logo {
@@ -113,14 +56,11 @@
             justify-content: center;
             gap: 12px;
             margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
         }
         
         .logo i {
             font-size: 2.2rem;
             color: var(--amazigh-yellow);
-            animation: pulse 2s infinite;
         }
         
         .logo h1 {
@@ -129,31 +69,14 @@
             background: linear-gradient(45deg, var(--amazigh-yellow), #f39c12);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .amazigh-symbol {
-            font-size: 1.6rem;
-            margin-left: 8px;
-            color: var(--amazigh-yellow);
-        }
-        
-        .tagline {
-            color: var(--amazigh-light);
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 5px;
         }
         
         .auth-form {
             background: rgba(58, 90, 93, 0.7);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            margin: 20px;
             border: 1px solid rgba(42, 157, 143, 0.3);
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
         }
         
         .form-title {
@@ -161,26 +84,10 @@
             margin-bottom: 20px;
             color: var(--amazigh-yellow);
             font-size: 1.4rem;
-            position: relative;
-            padding-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .form-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--amazigh-yellow), var(--amazigh-green));
-            border-radius: 4px;
         }
         
         .input-group {
             margin-bottom: 16px;
-            position: relative;
         }
         
         .input-group label {
@@ -188,10 +95,6 @@
             margin-bottom: 6px;
             color: var(--amazigh-light);
             font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
         
         .input-group input {
@@ -202,27 +105,6 @@
             background: rgba(0, 0, 0, 0.3);
             color: white;
             font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--amazigh-yellow);
-            box-shadow: 0 0 0 3px rgba(233, 196, 106, 0.25);
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 38px;
-            color: var(--amazigh-light);
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .password-toggle:hover {
-            opacity: 1;
         }
         
         .submit-btn {
@@ -236,31 +118,6 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 12px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(26, 41, 128, 0.5);
-        }
-        
-        .submit-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 40%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(25deg);
-            transition: all 0.6s;
-        }
-        
-        .submit-btn:hover::after {
-            left: 120%;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(42, 157, 143, 0.7);
         }
         
         .switch-form {
@@ -275,580 +132,6 @@
             text-decoration: none;
             cursor: pointer;
             font-weight: 700;
-            transition: color 0.3s;
-            margin-left: 6px;
-        }
-        
-        .switch-form a:hover {
-            color: var(--amazigh-accent);
-            text-decoration: underline;
-        }
-        
-        .app-container {
-            display: none;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .app-header {
-            padding: 12px 15px;
-            background: linear-gradient(90deg, var(--amazigh-blue), var(--amazigh-green));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--amazigh-green), var(--amazigh-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-            color: var(--amazigh-yellow);
-        }
-        
-        .user-details {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .user-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        
-        .balance {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-top: 2px;
-            color: var(--amazigh-yellow);
-        }
-        
-        .balance i {
-            color: var(--amazigh-yellow);
-            font-size: 1.1rem;
-        }
-        
-        .app-actions {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .language-selector {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        
-        .language-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-weight: bold;
-        }
-        
-        .language-btn:hover {
-            background: rgba(0, 0, 0, 0.5);
-            transform: translateY(-3px);
-        }
-        
-        .language-dropdown {
-            position: absolute;
-            top: 45px;
-            right: 0;
-            background: var(--amazigh-dark);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            display: none;
-            z-index: 10;
-        }
-        
-        .language-dropdown.show {
-            display: block;
-        }
-        
-        .language-option {
-            padding: 10px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            min-width: 120px;
-        }
-        
-        .language-option:hover {
-            background: rgba(42, 157, 143, 0.5);
-        }
-        
-        .language-flag {
-            width: 20px;
-            height: 15px;
-            border-radius: 2px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .app-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            max-height: calc(100% - 120px);
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--amazigh-yellow);
-            text-align: center;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--amazigh-blue), var(--amazigh-green));
-            border-radius: 4px;
-        }
-        
-        .mining-container {
-            background: linear-gradient(135deg, #3a5a5d, #2d7d70);
-            border-radius: 18px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            border: 2px solid var(--amazigh-green);
-            margin-bottom: 25px;
-        }
-        
-        .mining-header {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        
-        .coin {
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, var(--amazigh-yellow), #f39c12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            font-weight: bold;
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-            animation: pulse 2s infinite;
-            position: relative;
-            color: var(--amazigh-dark);
-        }
-        
-        .coin::after {
-            content: 'RIFC';
-            position: absolute;
-            bottom: -22px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--amazigh-yellow);
-        }
-        
-        .mining-stats {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            padding: 12px 0;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--amazigh-yellow);
-            line-height: 1.2;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: #bdc3c7;
-        }
-        
-        .timer {
-            font-size: 1.5rem;
-            margin: 20px 0;
-            color: var(--amazigh-green);
-            font-weight: 700;
-            letter-spacing: 1px;
-            background: rgba(0,0,0,0.3);
-            padding: 8px;
-            border-radius: 10px;
-            font-family: monospace;
-        }
-        
-        .claim-btn {
-            background: linear-gradient(135deg, var(--amazigh-green), #27ae60);
-            color: white;
-            border: none;
-            padding: 14px 35px;
-            font-size: 1.1rem;
-            border-radius: 45px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 800;
-            box-shadow: 0 6px 16px rgba(42, 157, 143, 0.5);
-            margin-top: 12px;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            max-width: 280px;
-        }
-        
-        .claim-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 22px rgba(42, 157, 143, 0.7);
-        }
-        
-        .claim-btn:disabled {
-            background: linear-gradient(135deg, #7f8c8d, #95a5a6);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .referral-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-card {
-            background: rgba(42, 157, 143, 0.15);
-            border-radius: 14px;
-            padding: 18px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(42, 157, 143, 0.3);
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-        }
-        
-        .stat-card.referral-earnings {
-            background: rgba(233, 196, 106, 0.15);
-            border-color: rgba(233, 196, 106, 0.3);
-        }
-        
-        .stat-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--amazigh-green);
-        }
-        
-        .stat-card.referral-earnings .stat-icon {
-            color: var(--amazigh-yellow);
-        }
-        
-        .stat-value {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--amazigh-green);
-        }
-        
-        .stat-card.referral-earnings .stat-value {
-            color: var(--amazigh-yellow);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #bdc3c7;
-        }
-        
-        .referral-link-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 14px;
-            padding: 12px;
-            display: flex;
-            margin-bottom: 20px;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .referral-link {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 0.9rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .copy-btn {
-            background: var(--amazigh-yellow);
-            color: var(--amazigh-dark);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            min-width: 110px;
-            justify-content: center;
-        }
-        
-        .copy-btn:hover {
-            background: #f39c12;
-            transform: translateY(-2px);
-        }
-        
-        .referral-list {
-            margin-top: 16px;
-        }
-        
-        .referral-item {
-            background: linear-gradient(to right, rgba(58, 90, 93, 0.7), rgba(45, 125, 112, 0.7));
-            border-radius: 14px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s;
-        }
-        
-        .referral-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-        }
-        
-        .referral-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--amazigh-green), var(--amazigh-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            flex-shrink: 0;
-            color: var(--amazigh-yellow);
-        }
-        
-        .referral-info {
-            flex: 1;
-        }
-        
-        .referral-name {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .referral-email {
-            font-size: 0.85rem;
-            color: #bdc3c7;
-            margin-bottom: 6px;
-            display: block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .referral-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 6px;
-            font-size: 0.85rem;
-        }
-        
-        .referral-earnings {
-            background: rgba(42, 157, 143, 0.15);
-            color: var(--amazigh-green);
-            padding: 4px 10px;
-            border-radius: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .referral-status {
-            padding: 4px 10px;
-            border-radius: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .status-active {
-            background: rgba(42, 157, 143, 0.2);
-            color: var(--amazigh-green);
-        }
-        
-        .status-inactive {
-            background: rgba(231, 76, 60, 0.2);
-            color: var(--amazigh-accent);
-        }
-        
-        .app-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 8px;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-btn {
-            width: 55px;
-            height: 55px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            color: white;
-            position: relative;
-            overflow: hidden;
-            margin: 0 2px;
-        }
-        
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
-        }
-        
-        .nav-btn:hover::before {
-            opacity: 1;
-        }
-        
-        .nav-btn:hover {
-            transform: translateY(-6px);
-        }
-        
-        .nav-btn.active {
-            transform: scale(1.05);
-            box-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
-        }
-        
-        .nav-btn i {
-            margin-bottom: 3px;
-            z-index: 2;
-            position: relative;
-        }
-        
-        .nav-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            margin-top: 2px;
-            z-index: 2;
-            position: relative;
-        }
-        
-        .nav-btn:nth-child(1) {
-            background: linear-gradient(135deg, var(--amazigh-yellow), #f39c12);
-        }
-        
-        .nav-btn:nth-child(2) {
-            background: linear-gradient(135deg, var(--amazigh-green), #2a9d8f);
-        }
-        
-        .nav-btn:nth-child(3) {
-            background: linear-gradient(135deg, var(--amazigh-blue), #1a5f7a);
-        }
-        
-        .nav-btn:nth-child(4) {
-            background: linear-gradient(135deg, var(--amazigh-accent), #e76f51);
-        }
-        
-        .welcome-notification {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, var(--amazigh-green), #2a9d8f);
-            color: white;
-            text-align: center;
-            padding: 12px;
-            font-weight: 700;
-            z-index: 2000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transform: translateY(-100%);
-            transition: transform 0.5s ease-out;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .welcome-notification.show {
-            transform: translateY(0);
         }
         
         .toast {
@@ -860,175 +143,13 @@
             color: white;
             padding: 12px 30px;
             border-radius: 45px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s;
-            font-weight: 600;
-            font-size: 0.95rem;
-            min-width: 280px;
-            text-align: center;
         }
         
         .toast.show {
             opacity: 1;
-        }
-        
-        .social-section {
-            display: none;
-        }
-        
-        .social-container {
-            background: linear-gradient(135deg, #1a5f7a, #2a9d8f);
-            border-radius: 18px;
-            padding: 18px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            border: 2px solid var(--amazigh-yellow);
-            margin-bottom: 18px;
-        }
-        
-        .social-list {
-            max-height: 280px;
-            overflow-y: auto;
-            margin-bottom: 16px;
-        }
-        
-        .social-item {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 14px;
-            padding: 14px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--amazigh-yellow);
-            transition: all 0.3s;
-        }
-        
-        .social-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            gap: 8px;
-        }
-        
-        .social-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--amazigh-green), var(--amazigh-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--amazigh-yellow);
-            flex-shrink: 0;
-        }
-        
-        .social-user {
-            font-weight: 700;
-            color: var(--amazigh-yellow);
-        }
-        
-        .social-date {
-            font-size: 0.75rem;
-            color: #bdc3c7;
-            margin-left: auto;
-        }
-        
-        .social-content {
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .social-form {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 14px;
-            padding: 16px;
-            border: 1px solid rgba(42, 157, 143, 0.3);
-        }
-        
-        .social-form h3 {
-            color: var(--amazigh-yellow);
-            margin-bottom: 12px;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-        
-        textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid var(--amazigh-green);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            resize: vertical;
-            min-height: 90px;
-        }
-        
-        textarea:focus {
-            outline: none;
-            border-color: var(--amazigh-yellow);
-            box-shadow: 0 0 0 3px rgba(233, 196, 106, 0.25);
-        }
-        
-        .register-success {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--amazigh-green), #2a9d8f);
-            border-radius: 14px;
-            margin-top: 16px;
-            color: white;
-        }
-        
-        .register-success i {
-            font-size: 2.8rem;
-            margin-bottom: 12px;
-            color: var(--amazigh-yellow);
-        }
-        
-        .register-success h3 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-        }
-        
-        .register-success-btn {
-            background: var(--amazigh-yellow);
-            color: var(--amazigh-dark);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            margin-top: 16px;
-            transition: all 0.3s;
-        }
-        
-        .register-success-btn:hover {
-            background: #f39c12;
-            transform: translateY(-3px);
-        }
-        
-        .supabase-config {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 14px;
-            padding: 16px;
-            margin-top: 15px;
-            border: 1px solid rgba(233, 196, 106, 0.3);
-        }
-        
-        .supabase-config h3 {
-            color: var(--amazigh-yellow);
-            margin-bottom: 12px;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-        
-        .config-info {
-            font-size: 0.8rem;
-            color: #bdc3c7;
-            margin-top: 8px;
-            text-align: center;
         }
         
         .loading-overlay {
@@ -1048,169 +169,30 @@
             gap: 15px;
         }
         
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--amazigh-yellow);
-            animation: spin 1s ease-in-out infinite;
+        .welcome-notification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--amazigh-green), #2a9d8f);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: 700;
+            z-index: 2000;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease-out;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Media Queries para Chrome y otros navegadores */
-        @media (max-width: 600px) {
-            .container {
-                height: 95vh;
-                max-height: 95vh;
-                min-height: 95vh;
-            }
-            
-            .logo h1 {
-                font-size: 1.6rem;
-            }
-            
-            .auth-form {
-                padding: 16px;
-            }
-            
-            .input-group input {
-                padding: 11px 14px;
-            }
-            
-            .submit-btn {
-                padding: 12px;
-                font-size: 1rem;
-            }
-            
-            .mining-container {
-                padding: 16px;
-            }
-            
-            .coin {
-                width: 55px;
-                height: 55px;
-                font-size: 1.4rem;
-            }
-            
-            .claim-btn {
-                padding: 12px;
-                font-size: 1rem;
-                max-width: 90%;
-            }
-            
-            .nav-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-                border-radius: 14px;
-            }
-            
-            .app-nav {
-                padding: 10px 5px;
-            }
-            
-            .nav-label {
-                font-size: 0.6rem;
-            }
-            
-            .referral-stats {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .referral-item {
-                padding: 14px;
-            }
-            
-            .referral-avatar {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-            
-            .timer {
-                font-size: 1.4rem;
-            }
-        }
-        
-        @media (max-height: 700px) {
-            .container {
-                height: 98vh;
-                max-height: 98vh;
-                min-height: 98vh;
-            }
-            
-            .app-content {
-                padding: 12px;
-            }
-            
-            .section-title {
-                margin-bottom: 15px;
-                font-size: 1.4rem;
-            }
-            
-            .mining-container {
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-            
-            .mining-header {
-                margin: 15px 0;
-            }
-            
-            .coin {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
-            }
-            
-            .stat-value {
-                font-size: 1.4rem;
-            }
-            
-            .stat-label {
-                font-size: 0.8rem;
-            }
-            
-            .referral-stats {
-                margin-bottom: 15px;
-            }
-        }
-        
-        /* Chrome specific fixes */
-        @media screen and (-webkit-min-device-pixel-ratio:0) {
-            .container {
-                transform: translateZ(0);
-                backface-visibility: hidden;
-                perspective: 1000;
-            }
-            
-            .auth-form, .mining-container, .stat-card {
-                transform: translateZ(0);
-            }
-            
-            input, textarea, button {
-                -webkit-appearance: none;
-                border-radius: 0;
-            }
+        .welcome-notification.show {
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
     <div class="welcome-notification" id="welcome-notification">
         <i class="fas fa-gift"></i>
-        <span data-i18n="welcome_bonus">¡Bienvenido! Has recibido 100 RIFC de bonificación.</span>
+        <span>¡Bienvenido! Has recibido 100 RIFC de bonificación.</span>
     </div>
     <div class="toast" id="toast"></div>
     
@@ -1225,221 +207,47 @@
                 <div class="logo">
                     <i class="fas fa-coins"></i>
                     <h1>RifRifanCoin</h1>
-                    <span class="amazigh-symbol">ⵣ</span>
                 </div>
-                <div class="tagline" data-i18n="platform_tagline">Imariren n uẓawan amazigh</div>
+                <div class="tagline">Imariren n uẓawan amazigh</div>
             </div>
             
             <div class="auth-form" id="login-form">
-                <h2 class="form-title" data-i18n="login_title">INICIAR SESIÓN</h2>
+                <h2 class="form-title">INICIAR SESIÓN</h2>
                 <div class="input-group">
-                    <label for="login-email"><i class="fas fa-envelope"></i> <span data-i18n="email_label">Correo Electrónico</span></label>
+                    <label for="login-email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
                     <input type="email" id="login-email" placeholder="ejemplo@correo.com">
                 </div>
                 <div class="input-group">
-                    <label for="login-password"><i class="fas fa-lock"></i> <span data-i18n="password_label">Contraseña</span></label>
-                    <input type="password" id="login-password" data-i18n-placeholder="password_placeholder" placeholder="Ingresa tu contraseña">
-                    <span class="password-toggle" id="login-password-toggle">
-                        <i class="fas fa-eye"></i>
-                    </span>
+                    <label for="login-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="login-password" placeholder="Ingresa tu contraseña">
                 </div>
-                <button class="submit-btn" id="login-submit-btn" data-i18n="login_button">INGRESAR</button>
+                <button class="submit-btn" id="login-submit-btn">INGRESAR</button>
                 <div class="switch-form">
-                    <span data-i18n="no_account">¿No tienes cuenta?</span> <a id="switch-to-register" data-i18n="register_now">Regístrate ahora</a>
+                    <span>¿No tienes cuenta?</span> <a id="switch-to-register">Regístrate ahora</a>
                 </div>
             </div>
             
             <div class="auth-form" id="register-form" style="display: none;">
-                <h2 class="form-title" data-i18n="register_title">REGISTRARSE</h2>
+                <h2 class="form-title">REGISTRARSE</h2>
                 <div class="input-group">
-                    <label for="register-name"><i class="fas fa-user"></i> <span data-i18n="full_name">Nombre Completo</span></label>
-                    <input type="text" id="register-name" data-i18n-placeholder="name_placeholder" placeholder="Juan Pérez">
+                    <label for="register-name"><i class="fas fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="register-name" placeholder="Juan Pérez">
                 </div>
                 <div class="input-group">
-                    <label for="register-email"><i class="fas fa-envelope"></i> <span data-i18n="email_label">Correo Electrónico</span></label>
+                    <label for="register-email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
                     <input type="email" id="register-email" placeholder="nuevo@correo.com">
                 </div>
                 <div class="input-group">
-                    <label for="register-password"><i class="fas fa-lock"></i> <span data-i18n="password_label">Contraseña</span></label>
-                    <input type="password" id="register-password" data-i18n-placeholder="password_placeholder_register" placeholder="Mínimo 6 caracteres">
-                    <span class="password-toggle" id="register-password-toggle">
-                        <i class="fas fa-eye"></i>
-                    </span>
+                    <label for="register-password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="register-password" placeholder="Mínimo 6 caracteres">
                 </div>
                 <div class="input-group">
-                    <label for="register-referral"><i class="fas fa-user-plus"></i> <span data-i18n="referral_code">Código de Referido</span> <span data-i18n="optional">(opcional)</span></label>
+                    <label for="register-referral"><i class="fas fa-user-plus"></i> Código de Referido (opcional)</label>
                     <input type="text" id="register-referral" placeholder="Código de referido">
                 </div>
-                <button class="submit-btn" id="register-submit-btn" data-i18n="create_account">CREAR CUENTA</button>
+                <button class="submit-btn" id="register-submit-btn">CREAR CUENTA</button>
                 <div class="switch-form">
-                    <span data-i18n="have_account">¿Ya tienes cuenta?</span> <a id="switch-to-login" data-i18n="login_now">Inicia Sesión</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="app-container" id="app-container">
-            <div class="app-header">
-                <div class="user-info">
-                    <div class="user-avatar" id="user-avatar">JD</div>
-                    <div class="user-details">
-                        <div class="user-name" id="user-name">John Doe</div>
-                        <div class="balance">
-                            <i class="fas fa-coins"></i>
-                            <span id="balance">0 RIFC</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="app-actions">
-                    <div class="language-selector">
-                        <div class="language-btn" id="language-btn">ES</div>
-                        <div class="language-dropdown" id="language-dropdown">
-                            <div class="language-option" data-lang="es">
-                                <div class="language-flag" style="background-image: url('https://flagcdn.com/es.svg')"></div>
-                                <span>Español</span>
-                            </div>
-                            <div class="language-option" data-lang="en">
-                                <div class="language-flag" style="background-image: url('https://flagcdn.com/gb.svg')"></div>
-                                <span>English</span>
-                            </div>
-                            <div class="language-option" data-lang="fr">
-                                <div class="language-flag" style="background-image: url('https://flagcdn.com/fr.svg')"></div>
-                                <span>Français</span>
-                            </div>
-                            <div class="language-option" data-lang="ar">
-                                <div class="language-flag" style="background-image: url('https://flagcdn.com/ma.svg')"></div>
-                                <span>العربية</span>
-                            </div>
-                            <div class="language-option" data-lang="amz">
-                                <div class="language-flag" style="background: linear-gradient(to bottom, #0066CC 0%, #0066CC 33%, #00CC66 33%, #00CC66 66%, #FFCC00 66%, #FFCC00 100%);"></div>
-                                <span>ⵜⴰⵎⴰⵣⵉⵖⵜ</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="app-content">
-                <div class="mining-section" id="mining-section">
-                    <h2 class="section-title" data-i18n="mining_title">PLATAFORMA RIFC</h2>
-                    <div class="mining-container">
-                        <div class="mining-header">
-                            <div class="coin">10</div>
-                            <div class="coin" id="bonus-coin">+0</div>
-                            <div class="coin" id="bonus-coin2">+0</div>
-                        </div>
-                        <div class="mining-stats">
-                            <div class="stat">
-                                <div class="stat-value" id="bonus-referrals">0</div>
-                                <div class="stat-label" data-i18n="active_refs">Referidos Activos</div>
-                            </div>
-                            <div class="stat">
-                                <div class="stat-value" id="total-to-claim">10</div>
-                                <div class="stat-label" data-i18n="to_claim">Total a Reclamar</div>
-                            </div>
-                        </div>
-                        <div class="timer" id="timer" data-i18n="ready_to_claim">Listo para reclamar</div>
-                        <button class="claim-btn" id="claim-btn" data-i18n="claim_mining">RECLAMAR RIFC</button>
-                    </div>
-                </div>
-                
-                <div class="referrals-section" id="referrals-section" style="display: none;">
-                    <h2 class="section-title" data-i18n="referrals_title">TUS REFERIDOS</h2>
-                    <div class="referral-stats">
-                        <div class="stat-card">
-                            <i class="fas fa-users stat-icon"></i>
-                            <div class="stat-value" id="referral-count">0</div>
-                            <div class="stat-label" data-i18n="total_refs">Referidos Totales</div>
-                        </div>
-                        <div class="stat-card referral-earnings">
-                            <i class="fas fa-coins stat-icon"></i>
-                            <div class="stat-value" id="referral-earnings">0</div>
-                            <div class="stat-label" data-i18n="earned_rifc">RIFC Ganados</div>
-                        </div>
-                    </div>
-                    <div class="referral-link-container">
-                        <input type="text" class="referral-link" id="referral-link" value="" readonly>
-                        <button class="copy-btn" id="copy-btn">
-                            <i class="fas fa-copy"></i> <span data-i18n="copy_link">Copiar Enlace</span>
-                        </button>
-                    </div>
-                    <div class="referral-list" id="referral-list"></div>
-                </div>
-                
-                <div class="social-section" id="social-section" style="display: none;">
-                    <h2 class="section-title" data-i18n="social_title">MENSAJES SOCIALES</h2>
-                    <div class="social-container">
-                        <div class="social-list" id="social-list">
-                            <!-- Mensajes sociales se cargarán aquí dinámicamente -->
-                        </div>
-                        <div class="social-form">
-                            <h3 data-i18n="post_message">Publicar Mensaje</h3>
-                            <textarea id="social-message" data-i18n-placeholder="social_placeholder" placeholder="Escribe tu mensaje público aquí..."></textarea>
-                            <button class="submit-btn" id="post-message-btn" data-i18n="post_button">PUBLICAR MENSAJE</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="account-section" id="account-section" style="display: none;">
-                    <h2 class="section-title" data-i18n="account_settings">CONFIGURACIÓN DE CUENTA</h2>
-                    <div class="auth-form">
-                        <div class="input-group">
-                            <label for="account-name"><i class="fas fa-user"></i> <span data-i18n="name">Nombre</span></label>
-                            <input type="text" id="account-name" placeholder="Tu nombre">
-                        </div>
-                        <div class="input-group">
-                            <label for="account-email"><i class="fas fa-envelope"></i> <span data-i18n="email_label">Correo Electrónico</span></label>
-                            <input type="email" id="account-email" placeholder="Tu correo" readonly>
-                        </div>
-                        <div class="input-group">
-                            <label for="account-password"><i class="fas fa-lock"></i> <span data-i18n="new_password">Nueva Contraseña</span></label>
-                            <input type="password" id="account-password" data-i18n-placeholder="new_password_placeholder" placeholder="Dejar en blanco para no cambiar">
-                            <span class="password-toggle" id="account-password-toggle">
-                                <i class="fas fa-eye"></i>
-                            </span>
-                        </div>
-                        <button class="submit-btn" id="save-account-btn" data-i18n="save_changes">GUARDAR CAMBIOS</button>
-                        <button class="submit-btn" id="logout-btn" style="background: linear-gradient(135deg, var(--amazigh-accent), #e76f51); margin-top: 10px;" data-i18n="logout">
-                            CERRAR SESIÓN
-                        </button>
-                        
-                        <!-- Configuración de Supabase -->
-                        <div class="supabase-config">
-                            <h3><i class="fas fa-database"></i> Configuración de Supabase</h3>
-                            <div class="input-group">
-                                <label for="supabase-url"><i class="fas fa-link"></i> URL de Supabase</label>
-                                <input type="text" id="supabase-url" placeholder="https://tu-proyecto.supabase.co">
-                            </div>
-                            <div class="input-group">
-                                <label for="supabase-key"><i class="fas fa-key"></i> API Key</label>
-                                <input type="password" id="supabase-key" placeholder="Ingresa tu API Key de Supabase">
-                            </div>
-                            <button class="submit-btn" id="save-supabase-btn">
-                                <i class="fas fa-save"></i> GUARDAR CONFIGURACIÓN
-                            </button>
-                            <div class="config-info">
-                                Esta configuración permite sincronizar tus datos con Supabase
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="app-nav">
-                <div class="nav-btn active" id="nav-mining">
-                    <i class="fas fa-home"></i>
-                    <span class="nav-label" data-i18n="mining_nav">Inicio</span>
-                </div>
-                <div class="nav-btn" id="nav-referrals">
-                    <i class="fas fa-users"></i>
-                    <span class="nav-label" data-i18n="referrals_nav">Referidos</span>
-                </div>
-                <div class="nav-btn" id="nav-social">
-                    <i class="fas fa-comments"></i>
-                    <span class="nav-label" data-i18n="social_nav">Social</span>
-                </div>
-                <div class="nav-btn" id="nav-account">
-                    <i class="fas fa-user-cog"></i>
-                    <span class="nav-label" data-i18n="account_nav">Cuenta</span>
+                    <span>¿Ya tienes cuenta?</span> <a id="switch-to-login">Inicia Sesión</a>
                 </div>
             </div>
         </div>
@@ -1448,98 +256,27 @@
     <script>
         // Variables globales
         let currentUser = null;
-        let currentLanguage = 'es';
-        let miningInterval = null;
-        let socialMessages = [];
         let supabaseClient = null;
-        const claimInterval = 4 * 60 * 60 * 1000; // 4 horas en milisegundos
-        const welcomeNotification = document.getElementById('welcome-notification');
         
-        // Configuración de Supabase - Valores por defecto
-        let supabaseConfig = {
+        // Configuración de Supabase
+        const supabaseConfig = {
             url: 'https://sngcgcjpcjdobnsaygxm.supabase.co',
-            key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuZ2NnY2pwY2pkb2Juc2F5Z3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc4NTQxMDEsImV4cCI6MjA3MzQzMDEwMX0.jEtW65SuvK4YLn4ONoY7Jv32LQ4k2jCE5meSDgHNFvI',
-            enabled: false
+            key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuZ2NnY2pwY2pkb2Juc2F5Z3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc4NTQxMDEsImV4cCI6MjA3MzQzMDEwMX0.jEtW65SuvK4YLn4ONoY7Jv32LQ4k2jCE5meSDgHNFvI'
         };
 
-        // Función para inicializar Supabase
+        // Inicializar Supabase
         function initSupabase() {
             try {
-                const savedConfig = localStorage.getItem('supabaseConfig');
-                if (savedConfig) {
-                    supabaseConfig = JSON.parse(savedConfig);
-                }
-                
-                // Actualizar campos del formulario
-                document.getElementById('supabase-url').value = supabaseConfig.url || '';
-                document.getElementById('supabase-key').value = supabaseConfig.key || '';
-                
-                // Solo crear el cliente si tenemos URL y clave
-                if (supabaseConfig.url && supabaseConfig.key) {
-                    // Cerrar cliente existente si hay uno
-                    if (supabaseClient) {
-                        supabaseClient = null;
-                    }
-                    
-                    // Crear cliente de Supabase
-                    supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
-                    supabaseConfig.enabled = true;
-                    console.log('Supabase inicializado correctamente');
-                    
-                    // Verificar conexión
-                    testSupabaseConnection();
-                }
+                supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
+                console.log('Supabase inicializado correctamente');
+                return true;
             } catch (error) {
                 console.error('Error inicializando Supabase:', error);
-                showToast('Error inicializando Supabase: ' + error.message);
+                showToast('Error inicializando Supabase');
+                return false;
             }
         }
 
-        // Función para probar la conexión a Supabase
-        async function testSupabaseConnection() {
-            if (!supabaseConfig.enabled) return;
-            
-            try {
-                const { data, error } = await supabaseClient.from('profiles').select('count').limit(1);
-                if (error) {
-                    console.error('Error probando conexión a Supabase:', error);
-                    showToast('Error de conexión a Supabase: ' + error.message);
-                } else {
-                    console.log('Conexión a Supabase verificada correctamente');
-                }
-            } catch (error) {
-                console.error('Error probando conexión a Supabase:', error);
-                showToast('Error de conexión a Supabase: ' + error.message);
-            }
-        }
-
-        // Función para crear partículas flotantes
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Posición aleatoria
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const size = Math.random() * 3 + 1;
-                const duration = Math.random() * 20 + 10;
-                const delay = Math.random() * 10;
-                
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${delay}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-        
         // Función para mostrar notificaciones toast
         function showToast(message, duration = 3000) {
             const toast = document.getElementById('toast');
@@ -1565,31 +302,6 @@
             }
         }
         
-        // Función para cambiar el idioma
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            document.getElementById('language-btn').textContent = lang.toUpperCase();
-            
-            // Actualizar todos los elementos con data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            // Actualizar placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-                const key = element.getAttribute('data-i18n-placeholder');
-                if (translations[lang] && translations[lang][key]) {
-                    element.setAttribute('placeholder', translations[lang][key]);
-                }
-            });
-            
-            document.getElementById('language-dropdown').classList.remove('show');
-            showToast(translations[lang]['language_changed'] || 'Idioma cambiado');
-        }
-        
         // Función para generar un código de referido aleatorio
         function generateReferralCode() {
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -1600,83 +312,26 @@
             return result;
         }
         
-        // Función para procesar referidos
-        async function processReferral(referralCode, newUserId) {
-            try {
-                if (!supabaseConfig.enabled) return;
-                
-                // Buscar usuario por código de referido
-                const { data: referrer, error } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .eq('referral_code', referralCode)
-                    .single();
-                
-                if (error || !referrer) {
-                    console.log('Código de referido no válido');
-                    return;
-                }
-                
-                // Registrar la relación de referido
-                const { error: referralError } = await supabaseClient
-                    .from('referrals')
-                    .insert([
-                        { 
-                            referrer_id: referrer.id, 
-                            referred_id: newUserId 
-                        }
-                    ]);
-                
-                if (referralError) {
-                    console.error('Error creando referido:', referralError);
-                    return;
-                }
-                
-                // Actualizar balance del referido (bonificación)
-                const { error: updateError } = await supabaseClient
-                    .from('profiles')
-                    .update({ balance: referrer.balance + 50 })
-                    .eq('id', referrer.id);
-                
-                if (updateError) {
-                    console.error('Error actualizando balance:', updateError);
-                    return;
-                }
-                
-                console.log('Referido procesado correctamente');
-                
-            } catch (error) {
-                console.error('Error procesando referido:', error);
-            }
-        }
-        
         // Función para registrar un nuevo usuario
         async function registerUser() {
             const name = document.getElementById('register-name').value.trim();
             const email = document.getElementById('register-email').value.trim();
             const password = document.getElementById('register-password').value;
             const referralCode = document.getElementById('register-referral').value.trim();
-            const registerSubmitBtn = document.getElementById('register-submit-btn');
 
             if (!name || !email || !password) {
-                showToast(translations[currentLanguage]['fill_all'] || 'Completa todos los campos obligatorios');
+                showToast('Completa todos los campos obligatorios');
                 return;
             }
 
             if (password.length < 6) {
-                showToast(translations[currentLanguage]['password_min'] || 'La contraseña debe tener al menos 6 caracteres');
+                showToast('La contraseña debe tener al menos 6 caracteres');
                 return;
             }
 
-            registerSubmitBtn.disabled = true;
-            registerSubmitBtn.textContent = translations[currentLanguage]['creating'] || 'CREANDO...';
             toggleLoading(true, 'Creando cuenta...');
             
             try {
-                if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la sección de cuenta.');
-                }
-                
                 // Registrar usuario en Auth de Supabase
                 const { data: authData, error: authError } = await supabaseClient.auth.signUp({
                     email: email,
@@ -1708,71 +363,16 @@
                     throw new Error(profileError.message);
                 }
                 
-                // Procesar referido si existe código
-                if (referralCode) {
-                    await processReferral(referralCode, userId);
-                }
+                showToast('¡Registro exitoso! Por favor, verifica tu correo electrónico.');
                 
-                // Autenticar automáticamente al nuevo usuario
-                const { data: userData, error: userError } = await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password,
-                });
-                
-                if (userError) {
-                    throw new Error(userError.message);
-                }
-                
-                // Obtener perfil completo del usuario
-                const { data: profileData, error: profileError2 } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', userId)
-                    .single();
-                
-                if (profileError2) {
-                    throw new Error(profileError2.message);
-                }
-                
-                // Establecer usuario actual
-                currentUser = {
-                    id: profileData.id,
-                    name: profileData.name,
-                    email: profileData.email,
-                    balance: profileData.balance,
-                    lastClaim: profileData.last_claim,
-                    referralCode: profileData.referral_code
-                };
-                
-                // Guardar sesión
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                
-                // Actualizar la UI con el usuario
-                updateUserUI();
-                
-                // Ocultar pantalla de autenticación y mostrar la app
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('app-container').style.display = 'flex';
-                
-                // Iniciar temporizador de minería
-                startMiningTimer();
-                
-                // Mostrar notificación de bienvenida
-                welcomeNotification.classList.add('show');
-                setTimeout(() => welcomeNotification.classList.remove('show'), 5000);
-                
-                // Cargar mensajes sociales
-                updateSocialMessages();
-                
-                // Mostrar mensaje de éxito
-                showToast(translations[currentLanguage]['success_title'] || '¡Registro exitoso!');
+                // Volver al formulario de login
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('login-form').style.display = 'block';
                 
             } catch (error) {
                 console.error('Error al registrar usuario:', error);
-                showToast(error.message || translations[currentLanguage]['registration_error'] || 'Error al registrar usuario');
+                showToast(error.message || 'Error al registrar usuario');
             } finally {
-                registerSubmitBtn.disabled = false;
-                registerSubmitBtn.textContent = translations[currentLanguage]['create_account'];
                 toggleLoading(false);
             }
         }
@@ -1781,22 +381,15 @@
         async function loginUser() {
             const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
-            const loginSubmitBtn = document.getElementById('login-submit-btn');
 
             if (!email || !password) {
-                showToast(translations[currentLanguage]['fill_all'] || 'Completa todos los campos');
+                showToast('Completa todos los campos');
                 return;
             }
 
-            loginSubmitBtn.disabled = true;
-            loginSubmitBtn.textContent = translations[currentLanguage]['loading'] || 'CARGANDO...';
             toggleLoading(true, 'Iniciando sesión...');
             
             try {
-                if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la sección de cuenta.');
-                }
-                
                 // Iniciar sesión con Supabase Auth
                 const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
@@ -1820,16 +413,6 @@
                     throw new Error(profileError.message);
                 }
                 
-                // Obtener referidos del usuario
-                const { data: referralsData, error: referralsError } = await supabaseClient
-                    .from('referrals')
-                    .select('*')
-                    .eq('referrer_id', userId);
-                
-                if (referralsError) {
-                    console.error('Error obteniendo referidos:', referralsError);
-                }
-                
                 // Establecer usuario actual
                 currentUser = {
                     id: profileData.id,
@@ -1837,1068 +420,98 @@
                     email: profileData.email,
                     balance: profileData.balance,
                     lastClaim: profileData.last_claim,
-                    referrals: referralsData || [],
                     referralCode: profileData.referral_code
                 };
                 
                 // Guardar sesión
                 sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
-                // Actualizar la UI con el usuario
-                updateUserUI();
+                // Mostrar mensaje de bienvenida con el bono
+                const welcomeNotification = document.getElementById('welcome-notification');
+                welcomeNotification.classList.add('show');
+                setTimeout(() => welcomeNotification.classList.remove('show'), 5000);
                 
-                // Ocultar pantalla de autenticación y mostrar la app
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('app-container').style.display = 'flex';
-                
-                // Iniciar temporizador de minería
-                startMiningTimer();
-                
-                // Cargar mensajes sociales
-                updateSocialMessages();
-                
-                // Mostrar mensaje de bienvenida
-                showToast(`${translations[currentLanguage]['welcome_back'] || 'Bienvenido de nuevo'}, ${currentUser.name}!`);
+                showToast(`¡Bienvenido de nuevo, ${currentUser.name}!`);
                 
             } catch (error) {
                 console.error('Error al iniciar sesión:', error);
-                showToast(error.message || translations[currentLanguage]['login_error'] || 'Error al iniciar sesión');
+                showToast(error.message || 'Error al iniciar sesión');
             } finally {
-                loginSubmitBtn.disabled = false;
-                loginSubmitBtn.textContent = translations[currentLanguage]['login_button'];
                 toggleLoading(false);
-            }
-        }
-        
-        // Función para actualizar la UI del usuario
-        function updateUserUI() {
-            if (!currentUser) return;
-            
-            document.getElementById('user-name').textContent = currentUser.name;
-            document.getElementById('balance').textContent = currentUser.balance + ' RIFC';
-            document.getElementById('user-avatar').textContent = currentUser.name.substring(0, 2).toUpperCase();
-            document.getElementById('account-name').value = currentUser.name;
-            document.getElementById('account-email').value = currentUser.email;
-            
-            // Actualizar enlace de referido
-            const referralLink = `${window.location.origin}${window.location.pathname}?ref=${currentUser.referralCode}`;
-            document.getElementById('referral-link').value = referralLink;
-            
-            // Actualizar referidos
-            updateReferralsUI();
-            
-            // Actualizar estado del minero
-            updateMiningStatus();
-        }
-        
-        // Función para actualizar la UI de referidos
-        async function updateReferralsUI() {
-            if (!currentUser || !supabaseConfig.enabled) return;
-            
-            try {
-                // Obtener referidos con información de perfil
-                const { data: referrals, error } = await supabaseClient
-                    .from('referrals')
-                    .select(`
-                        referred_id,
-                        profiles:profiles!referrals_referred_id_fkey (
-                            name,
-                            email
-                        )
-                    `)
-                    .eq('referrer_id', currentUser.id);
-                
-                if (error) {
-                    console.error('Error obteniendo referidos:', error);
-                    return;
-                }
-                
-                // Actualizar contadores
-                document.getElementById('referral-count').textContent = referrals.length;
-                document.getElementById('bonus-referrals').textContent = referrals.length;
-                document.getElementById('referral-earnings').textContent = referrals.length * 50;
-                
-                // Actualizar lista de referidos
-                const referralList = document.getElementById('referral-list');
-                referralList.innerHTML = '';
-                
-                referrals.forEach(ref => {
-                    if (!ref.profiles) return;
-                    
-                    const referralItem = document.createElement('div');
-                    referralItem.className = 'referral-item';
-                    
-                    referralItem.innerHTML = `
-                        <div class="referral-avatar">${ref.profiles.name.substring(0, 2).toUpperCase()}</div>
-                        <div class="referral-info">
-                            <div class="referral-name">
-                                <i class="fas fa-user"></i>
-                                ${ref.profiles.name}
-                            </div>
-                            <span class="referral-email">${ref.profiles.email}</span>
-                            <div class="referral-meta">
-                                <span class="referral-earnings">
-                                    <i class="fas fa-coins"></i>
-                                    50 RIFC
-                                </span>
-                                <span class="referral-status status-active">
-                                    <i class="fas fa-check-circle"></i>
-                                    ${translations[currentLanguage]['active'] || 'Activo'}
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    referralList.appendChild(referralItem);
-                });
-                
-            } catch (error) {
-                console.error('Error actualizando referidos:', error);
-                showToast(translations[currentLanguage]['referrals_load_error'] || 'Error cargando referidos');
-            }
-        }
-        
-        // Función para copiar el enlace de referido
-        function copyReferralLink() {
-            const referralLink = document.getElementById('referral-link');
-            referralLink.select();
-            
-            try {
-                document.execCommand('copy');
-                showToast(translations[currentLanguage]['toast_copied'] || '¡Enlace copiado!');
-            } catch (err) {
-                // Fallback para navegadores modernos
-                navigator.clipboard.writeText(referralLink.value)
-                    .then(() => {
-                        showToast(translations[currentLanguage]['toast_copied'] || '¡Enlace copiado!');
-                    })
-                    .catch(() => {
-                        showToast('No se pudo copiar el enlace');
-                    });
-            }
-        }
-        
-        // Función para iniciar el temporizador de minería
-        function startMiningTimer() {
-            if (miningInterval) {
-                clearInterval(miningInterval);
-            }
-            
-            updateMiningStatus();
-            miningInterval = setInterval(updateMiningStatus, 1000);
-        }
-        
-        // Función para actualizar el estado de minería
-        function updateMiningStatus() {
-            if (!currentUser) return;
-            
-            const now = new Date();
-            const lastClaim = currentUser.lastClaim ? new Date(currentUser.lastClaim) : null;
-            const claimBtn = document.getElementById('claim-btn');
-            const timer = document.getElementById('timer');
-            
-            if (!lastClaim || (now - lastClaim) >= claimInterval) {
-                // Listo para reclamar
-                claimBtn.disabled = false;
-                timer.textContent = translations[currentLanguage]['ready_to_claim'] || 'Listo para reclamar';
-                return;
-            }
-            
-            // Calcular tiempo restante
-            const nextClaim = new Date(lastClaim.getTime() + claimInterval);
-            const timeLeft = nextClaim - now;
-            
-            if (timeLeft <= 0) {
-                claimBtn.disabled = false;
-                timer.textContent = translations[currentLanguage]['ready_to_claim'] || 'Listo para reclamar';
-                return;
-            }
-            
-            // Mostrar cuenta regresiva
-            claimBtn.disabled = true;
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            
-            timer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-        
-        // Función para reclamar RIFC minados
-        async function claimMining() {
-            if (!currentUser || !supabaseConfig.enabled) return;
-            
-            const claimBtn = document.getElementById('claim-btn');
-            claimBtn.disabled = true;
-            claimBtn.textContent = translations[currentLanguage]['mining_in_progress'] || 'Procesando...';
-            toggleLoading(true, 'Reclamando RIFC...');
-            
-            try {
-                // Obtener perfil actualizado del usuario
-                const { data: profileData, error: profileError } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', currentUser.id)
-                    .single();
-                
-                if (profileError) {
-                    throw new Error(profileError.message);
-                }
-                
-                // Obtener referidos del usuario
-                const { data: referralsData, error: referralsError } = await supabaseClient
-                    .from('referrals')
-                    .select('*')
-                    .eq('referrer_id', currentUser.id);
-                
-                if (referralsError) {
-                    console.error('Error obteniendo referidos:', referralsError);
-                }
-                
-                // Calcular recompensa base + bonificación por referidos
-                const baseReward = 10;
-                const referralBonus = (referralsData || []).length * 2;
-                const totalReward = baseReward + referralBonus;
-                
-                // Actualizar balance y última reclamación
-                const { error: updateError } = await supabaseClient
-                    .from('profiles')
-                    .update({ 
-                        balance: profileData.balance + totalReward,
-                        last_claim: new Date().toISOString()
-                    })
-                    .eq('id', currentUser.id);
-                
-                if (updateError) {
-                    throw new Error(updateError.message);
-                }
-                
-                // Actualizar usuario local
-                currentUser.balance = profileData.balance + totalReward;
-                currentUser.lastClaim = new Date().toISOString();
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                
-                // Actualizar UI
-                updateUserUI();
-                
-                // Mostrar animación de bonificación
-                if (referralBonus > 0) {
-                    document.getElementById('bonus-coin').textContent = `+${referralBonus}`;
-                    document.getElementById('bonus-coin').style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        document.getElementById('bonus-coin').style.display = 'none';
-                    }, 2000);
-                }
-                
-                showToast(`${translations[currentLanguage]['mining_claimed'] || '¡RIFC reclamados!'} +${totalReward}`);
-                
-            } catch (error) {
-                console.error('Error reclamando RIFC:', error);
-                showToast(translations[currentLanguage]['mining_error'] || 'Error al reclamar RIFC');
-            } finally {
-                claimBtn.disabled = false;
-                claimBtn.textContent = translations[currentLanguage]['claim_mining'];
-                toggleLoading(false);
-            }
-        }
-        
-        // Función para actualizar mensajes sociales
-        async function updateSocialMessages() {
-            if (!supabaseConfig.enabled) return;
-            
-            try {
-                const { data: messages, error } = await supabaseClient
-                    .from('social_messages')
-                    .select(`
-                        *,
-                        profiles:user_id (
-                            name
-                        )
-                    `)
-                    .order('created_at', { ascending: false })
-                    .limit(20);
-                
-                if (error) {
-                    console.error('Error cargando mensajes sociales:', error);
-                    return;
-                }
-                
-                socialMessages = messages || [];
-                renderSocialMessages();
-                
-            } catch (error) {
-                console.error('Error cargando mensajes sociales:', error);
-                showToast(translations[currentLanguage]['social_load_error'] || 'Error cargando mensajes');
-            }
-        }
-        
-        // Función para renderizar mensajes sociales
-        function renderSocialMessages() {
-            const socialList = document.getElementById('social-list');
-            socialList.innerHTML = '';
-            
-            socialMessages.forEach(msg => {
-                const socialItem = document.createElement('div');
-                socialItem.className = 'social-item';
-                
-                const userInitials = msg.profiles?.name ? msg.profiles.name.substring(0, 2).toUpperCase() : 'US';
-                const userName = msg.profiles?.name || 'Usuario';
-                const formattedDate = new Date(msg.created_at).toLocaleString();
-                
-                socialItem.innerHTML = `
-                    <div class="social-header">
-                        <div class="social-avatar">${userInitials}</div>
-                        <span class="social-user">${userName}</span>
-                        <span class="social-date">${formattedDate}</span>
-                    </div>
-                    <div class="social-content">${msg.content}</div>
-                `;
-                
-                socialList.appendChild(socialItem);
-            });
-        }
-        
-        // Función para publicar un mensaje social
-        async function postSocialMessage() {
-            if (!currentUser || !supabaseConfig.enabled) {
-                showToast(translations[currentLanguage]['login_required'] || 'Debes iniciar sesión para publicar mensajes');
-                return;
-            }
-            
-            const messageInput = document.getElementById('social-message');
-            const message = messageInput.value.trim();
-            const postBtn = document.getElementById('post-message-btn');
-            
-            if (!message) {
-                showToast(translations[currentLanguage]['empty_message'] || 'El mensaje no puede estar vacío');
-                return;
-            }
-            
-            postBtn.disabled = true;
-            postBtn.textContent = translations[currentLanguage]['posting'] || 'PUBLICANDO...';
-            toggleLoading(true, 'Publicando mensaje...');
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('social_messages')
-                    .insert([
-                        {
-                            user_id: currentUser.id,
-                            content: message
-                        }
-                    ]);
-                
-                if (error) {
-                    throw new Error(error.message);
-                }
-                
-                // Actualizar lista de mensajes
-                await updateSocialMessages();
-                
-                // Limpiar campo de entrada
-                messageInput.value = '';
-                
-                showToast(translations[currentLanguage]['message_posted'] || '¡Mensaje publicado!');
-                
-            } catch (error) {
-                console.error('Error publicando mensaje:', error);
-                showToast(translations[currentLanguage]['message_post_error'] || 'Error al publicar mensaje');
-            } finally {
-                postBtn.disabled = false;
-                postBtn.textContent = translations[currentLanguage]['post_button'];
-                toggleLoading(false);
-            }
-        }
-        
-        // Función para guardar cambios en la cuenta
-        async function saveAccountChanges() {
-            if (!currentUser || !supabaseConfig.enabled) return;
-            
-            const name = document.getElementById('account-name').value.trim();
-            const newPassword = document.getElementById('account-password').value;
-            const saveBtn = document.getElementById('save-account-btn');
-            
-            if (!name) {
-                showToast(translations[currentLanguage]['fill_all'] || 'Completa todos los campos obligatorios');
-                return;
-            }
-            
-            saveBtn.disabled = true;
-            saveBtn.textContent = translations[currentLanguage]['saving'] || 'GUARDANDO...';
-            toggleLoading(true, 'Guardando cambios...');
-            
-            try {
-                // Actualizar nombre en la base de datos
-                const { error: profileError } = await supabaseClient
-                    .from('profiles')
-                    .update({ name: name })
-                    .eq('id', currentUser.id);
-                
-                if (profileError) {
-                    throw new Error(profileError.message);
-                }
-                
-                // Actualizar contraseña si se proporcionó una nueva
-                if (newPassword) {
-                    if (newPassword.length < 6) {
-                        throw new Error(translations[currentLanguage]['password_min'] || 'La contraseña debe tener al menos 6 caracteres');
-                    }
-                    
-                    const { error: authError } = await supabaseClient.auth.updateUser({
-                        password: newPassword
-                    });
-                    
-                    if (authError) {
-                        throw new Error(authError.message);
-                    }
-                }
-                
-                // Actualizar usuario local
-                currentUser.name = name;
-                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                
-                // Actualizar UI
-                updateUserUI();
-                
-                showToast(translations[currentLanguage]['save_changes'] || 'Cambios guardados');
-                
-            } catch (error) {
-                console.error('Error guardando cambios:', error);
-                showToast(error.message || translations[currentLanguage]['save_error'] || 'Error guardando cambios');
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = translations[currentLanguage]['save_changes'];
-                toggleLoading(false);
-            }
-        }
-        
-        // Función para guardar configuración de Supabase
-        function saveSupabaseConfig() {
-            const url = document.getElementById('supabase-url').value.trim();
-            const key = document.getElementById('supabase-key').value.trim();
-            const saveBtn = document.getElementById('save-supabase-btn');
-            
-            saveBtn.disabled = true;
-            saveBtn.textContent = 'GUARDANDO...';
-            toggleLoading(true, 'Guardando configuración...');
-            
-            try {
-                supabaseConfig = {
-                    url: url,
-                    key: key,
-                    enabled: !!url && !!key
-                };
-                
-                // Guardar configuración
-                localStorage.setItem('supabaseConfig', JSON.stringify(supabaseConfig));
-                
-                // Inicializar Supabase
-                initSupabase();
-                
-                showToast('Configuración de Supabase guardada');
-                
-            } catch (error) {
-                console.error('Error guardando configuración de Supabase:', error);
-                showToast(error.message || 'Error guardando configuración');
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = 'GUARDAR CONFIGURACIÓN';
-                toggleLoading(false);
-            }
-        }
-        
-        // Función para cerrar sesión
-        async function logoutUser() {
-            if (supabaseConfig.enabled) {
-                try {
-                    const { error } = await supabaseClient.auth.signOut();
-                    if (error) {
-                        console.error('Error cerrando sesión:', error);
-                    }
-                } catch (error) {
-                    console.error('Error cerrando sesión:', error);
-                }
-            }
-            
-            currentUser = null;
-            sessionStorage.removeItem('currentUser');
-            
-            if (miningInterval) {
-                clearInterval(miningInterval);
-                miningInterval = null;
-            }
-            
-            // Mostrar pantalla de autenticación
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('app-container').style.display = 'none';
-            
-            // Restablecer formularios
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('login-email').value = '';
-            document.getElementById('login-password').value = '';
-            
-            showToast(translations[currentLanguage]['toast_logged_out'] || 'Sesión cerrada');
-        }
-        
-        // Función para mostrar una sección específica
-        function showSection(section) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.mining-section, .referrals-section, .social-section, .account-section').forEach(sec => {
-                sec.style.display = 'none';
-            });
-            
-            // Mostrar la sección seleccionada
-            document.getElementById(`${section}-section`).style.display = 'block';
-            
-            // Actualizar botones de navegación
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(`nav-${section}`).classList.add('active');
-            
-            // Cargar datos específicos de la sección si es necesario
-            if (section === 'referrals') {
-                updateReferralsUI();
-            } else if (section === 'social') {
-                updateSocialMessages();
             }
         }
         
         // Función para verificar sesión existente
         async function checkSession() {
             try {
-                // Inicializar Supabase primero
-                initSupabase();
+                const { data, error } = await supabaseClient.auth.getSession();
                 
-                // Si Supabase está configurado, verificar sesión
-                if (supabaseConfig.enabled) {
-                    const { data, error } = await supabaseClient.auth.getSession();
+                if (error) {
+                    console.error('Error verificando sesión:', error);
+                    return;
+                }
+                
+                if (data.session) {
+                    // Obtener perfil del usuario
+                    const userId = data.session.user.id;
+                    const { data: profileData, error: profileError } = await supabaseClient
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', userId)
+                        .single();
                     
-                    if (error) {
-                        console.error('Error verificando sesión:', error);
+                    if (profileError) {
+                        console.error('Error obteniendo perfil:', profileError);
                         return;
                     }
                     
-                    if (data.session) {
-                        // Obtener perfil del usuario
-                        const userId = data.session.user.id;
-                        const { data: profileData, error: profileError } = await supabaseClient
-                            .from('profiles')
-                            .select('*')
-                            .eq('id', userId)
-                            .single();
-                        
-                        if (profileError) {
-                            console.error('Error obteniendo perfil:', profileError);
-                            return;
-                        }
-                        
-                        // Obtener referidos del usuario
-                        const { data: referralsData, error: referralsError } = await supabaseClient
-                            .from('referrals')
-                            .select('*')
-                            .eq('referrer_id', userId);
-                        
-                        if (referralsError) {
-                            console.error('Error obteniendo referidos:', referralsError);
-                        }
-                        
-                        // Establecer usuario actual
-                        currentUser = {
-                            id: profileData.id,
-                            name: profileData.name,
-                            email: profileData.email,
-                            balance: profileData.balance,
-                            lastClaim: profileData.last_claim,
-                            referrals: referralsData || [],
-                            referralCode: profileData.referral_code
-                        };
-                        
-                        // Guardar sesión
-                        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        
-                        // Actualizar la UI con el usuario
-                        updateUserUI();
-                        
-                        // Ocultar pantalla de autenticación y mostrar la app
-                        document.getElementById('auth-screen').style.display = 'none';
-                        document.getElementById('app-container').style.display = 'flex';
-                        
-                        // Iniciar temporizador de minería
-                        startMiningTimer();
-                        
-                        // Cargar mensajes sociales
-                        updateSocialMessages();
-                    }
-                } else {
-                    // Fallback a sesión guardada en sessionStorage
-                    const savedUser = sessionStorage.getItem('currentUser');
-                    if (savedUser) {
-                        currentUser = JSON.parse(savedUser);
-                        updateUserUI();
-                        document.getElementById('auth-screen').style.display = 'none';
-                        document.getElementById('app-container').style.display = 'flex';
-                        startMiningTimer();
-                    }
+                    // Establecer usuario actual
+                    currentUser = {
+                        id: profileData.id,
+                        name: profileData.name,
+                        email: profileData.email,
+                        balance: profileData.balance,
+                        lastClaim: profileData.last_claim,
+                        referralCode: profileData.referral_code
+                    };
+                    
+                    // Guardar sesión
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Mostrar mensaje de bienvenida con el bono
+                    const welcomeNotification = document.getElementById('welcome-notification');
+                    welcomeNotification.classList.add('show');
+                    setTimeout(() => welcomeNotification.classList.remove('show'), 5000);
+                    
+                    showToast(`¡Bienvenido de nuevo, ${currentUser.name}!`);
                 }
             } catch (error) {
                 console.error('Error verificando sesión:', error);
             }
         }
-        
-        // Función para procesar parámetros de URL (para referidos)
-        function processUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            
-            if (refCode) {
-                document.getElementById('register-referral').value = refCode;
-            }
-        }
-        
-        // Función para alternar visibilidad de contraseña
-        function togglePasswordVisibility(inputId, toggleId) {
-            const passwordInput = document.getElementById(inputId);
-            const toggleIcon = document.getElementById(toggleId).querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
 
-        // Traducciones para todos los idiomas
-        const translations = {
-            es: {
-                "login_title": "INICIAR SESIÓN",
-                "email_label": "Correo Electrónico",
-                "password_label": "Contraseña",
-                "password_placeholder": "Ingresa tu contraseña",
-                "login_button": "INGRESAR",
-                "no_account": "¿No tienes cuenta?",
-                "register_now": "Regístrate ahora",
-                "register_title": "REGISTRARSE",
-                "full_name": "Nombre Completo",
-                "name_placeholder": "Juan Pérez",
-                "password_placeholder_register": "Mínimo 6 caracteres",
-                "referral_code": "Código de Referido",
-                "optional": "(opcional)",
-                "create_account": "CREAR CUENTA",
-                "have_account": "¿Ya tienes cuenta?",
-                "login_now": "Inicia Sesión",
-                "success_title": "¡Registro Exitoso!",
-                "platform_tagline": "Imariren n uẓawan amazigh",
-                "mining_title": "PLATAFORMA RIFC",
-                "active_refs": "Referidos Activos",
-                "to_claim": "Total a Reclamar",
-                "ready_to_claim": "Listo para reclamar",
-                "claim_mining": "RECLAMAR RIFC",
-                "referrals_title": "TUS REFERIDOS",
-                "total_refs": "Referidos Totales",
-                "earned_rifc": "RIFC Ganados",
-                "copy_link": "Copiar Enlace",
-                "social_title": "MENSAJES SOCIALES",
-                "post_message": "Publicar Mensaje",
-                "social_placeholder": "Escribe tu mensaje público aquí...",
-                "post_button": "PUBLICAR MENSAJE",
-                "account_settings": "CONFIGURACIÓN DE CUENTA",
-                "name": "Nombre",
-                "new_password": "Nueva Contraseña",
-                "new_password_placeholder": "Dejar en blanco para no cambiar",
-                "save_changes": "GUARDAR CAMBIOS",
-                "logout": "CERRAR SESIÓN",
-                "mining_nav": "Inicio",
-                "referrals_nav": "Referidos",
-                "social_nav": "Social",
-                "account_nav": "Cuenta",
-                "welcome_bonus": "¡Bienvenido! Has recibido 100 RIFC de bonificación.",
-                "welcome_back": "Bienvenido de nuevo",
-                "toast_copied": "¡Enlace copiado!",
-                "toast_logged_out": "Sesión cerrada",
-                "fill_all": "Completa todos los campos",
-                "password_min": "La contraseña debe tener al menos 6 caracteres",
-                "loading": "CARGANDO...",
-                "creating": "CREANDO...",
-                "posting": "PUBLICANDO...",
-                "saving": "GUARDANDO...",
-                "language_changed": "Idioma cambiado",
-                "mining_claimed": "¡RIFC reclamados!",
-                "mining_in_progress": "Procesando...",
-                "mining_error": "Error al reclamar RIFC",
-                "message_posted": "¡Mensaje publicado!",
-                "empty_message": "El mensaje no puede estar vacío",
-                "login_required": "Debes iniciar sesión para publicar mensajes",
-                "registration_error": "Error al registrar. Inténtalo de nuevo.",
-                "email_exists": "Este email ya está registrado",
-                "login_error": "Email o contraseña incorrectos",
-                "save_changes": "Cambios guardados",
-                "save_error": "Error guardando cambios",
-                "active": "Activo",
-                "inactive": "Inactivo",
-                "referrals_load_error": "Error al cargar referidos",
-                "social_load_error": "Error al cargar mensajes",
-                "message_post_error": "Error al publicar mensaje"
-            },
-            en: {
-                "login_title": "LOGIN",
-                "email_label": "Email",
-                "password_label": "Password",
-                "password_placeholder": "Enter your password",
-                "login_button": "LOGIN",
-                "no_account": "Don't have an account?",
-                "register_now": "Register now",
-                "register_title": "REGISTER",
-                "full_name": "Full Name",
-                "name_placeholder": "John Doe",
-                "password_placeholder_register": "Minimum 6 characters",
-                "referral_code": "Referral Code",
-                "optional": "(optional)",
-                "create_account": "CREATE ACCOUNT",
-                "have_account": "Already have an account?",
-                "login_now": "Login now",
-                "success_title": "Success!",
-                "platform_tagline": "Amazigh Platform",
-                "mining_title": "RIFC PLATFORM",
-                "active_refs": "Active Referrals",
-                "to_claim": "Total to Claim",
-                "ready_to_claim": "Ready to claim",
-                "claim_mining": "CLAIM RIFC",
-                "referrals_title": "YOUR REFERRALS",
-                "total_refs": "Total Referrals",
-                "earned_rifc": "RIFC Earned",
-                "copy_link": "Copy Link",
-                "social_title": "SOCIAL MESSAGES",
-                "post_message": "Post Message",
-                "social_placeholder": "Write your public message here...",
-                "post_button": "POST MESSAGE",
-                "account_settings": "ACCOUNT SETTINGS",
-                "name": "Name",
-                "new_password": "New Password",
-                "new_password_placeholder": "Leave blank to keep current",
-                "save_changes": "SAVE CHANGES",
-                "logout": "LOGOUT",
-                "mining_nav": "Home",
-                "referrals_nav": "Referrals",
-                "social_nav": "Social",
-                "account_nav": "Account",
-                "welcome_bonus": "Welcome! You received 100 RIFC bonus.",
-                "welcome_back": "Welcome back",
-                "toast_copied": "Link copied!",
-                "toast_logged_out": "Logged out",
-                "fill_all": "Please fill all fields",
-                "password_min": "Password must be at least 6 characters",
-                "loading": "LOADING...",
-                "creating": "CREATING...",
-                "posting": "POSTING...",
-                "saving": "SAVING...",
-                "language_changed": "Language changed",
-                "mining_claimed": "RIFC claimed!",
-                "mining_in_progress": "Processing...",
-                "mining_error": "Error claiming RIFC",
-                "message_posted": "Message posted!",
-                "empty_message": "Message cannot be empty",
-                "login_required": "You must login to post messages",
-                "registration_error": "Registration error. Please try again.",
-                "email_exists": "This email is already registered",
-                "login_error": "Email or password incorrect",
-                "save_changes": "Changes saved",
-                "save_error": "Error saving changes",
-                "active": "Active",
-                "inactive": "Inactive",
-                "referrals_load_error": "Error loading referrals",
-                "social_load_error": "Error loading messages",
-                "message_post_error": "Error posting message"
-            },
-            fr: {
-                "login_title": "CONNEXION",
-                "email_label": "Adresse e-mail",
-                "password_label": "Mot de passe",
-                "password_placeholder": "Entrez votre mot de passe",
-                "login_button": "CONNEXION",
-                "no_account": "Vous n'avez pas de compte ?",
-                "register_now": "Inscrivez-vous maintenant",
-                "register_title": "S'INSCRIRE",
-                "full_name": "Nom complet",
-                "name_placeholder": "Jean Dupont",
-                "password_placeholder_register": "Minimum 6 caractères",
-                "referral_code": "Code de parrainage",
-                "optional": "(optionnel)",
-                "create_account": "CRÉER UN COMPTE",
-                "have_account": "Vous avez déjà un compte ?",
-                "login_now": "Connectez-vous",
-                "success_title": "Succès !",
-                "platform_tagline": "Plateforme amazighe",
-                "mining_title": "PLATEFORME RIFC",
-                "active_refs": "Parrainages actifs",
-                "to_claim": "Total à réclamer",
-                "ready_to_claim": "Prêt à réclamer",
-                "claim_mining": "RÉCLAMER RIFC",
-                "referrals_title": "VOS PARRAINAGES",
-                "total_refs": "Parrainages totaux",
-                "earned_rifc": "RIFC Gagnés",
-                "copy_link": "Copier le lien",
-                "social_title": "MESSAGES SOCIAUX",
-                "post_message": "Publier un message",
-                "social_placeholder": "Écrivez votre message public ici...",
-                "post_button": "PUBLIER MESSAGE",
-                "account_settings": "PARAMÈTRES DU COMPTE",
-                "name": "Nom",
-                "new_password": "Nouveau mot de passe",
-                "new_password_placeholder": "Laisser vide pour conserver",
-                "save_changes": "ENREGISTRER",
-                "logout": "DÉCONNEXION",
-                "mining_nav": "Accueil",
-                "referrals_nav": "Parrainages",
-                "social_nav": "Social",
-                "account_nav": "Compte",
-                "welcome_bonus": "Bienvenue ! Vous avez reçu un bonus de 100 RIFC.",
-                "welcome_back": "Content de vous revoir",
-                "toast_copied": "Lien copié !",
-                "toast_logged_out": "Déconnecté",
-                "fill_all": "Veuillez remplir tous les champs",
-                "password_min": "Le mot de passe doit avoir au moins 6 caractères",
-                "loading": "CHARGEMENT...",
-                "creating": "CRÉATION...",
-                "posting": "PUBLICATION...",
-                "saving": "ENREGISTREMENT...",
-                "language_changed": "Langue changée",
-                "mining_claimed": "RIFC réclamés !",
-                "mining_in_progress": "Traitement...",
-                "mining_error": "Erreur de réclamation RIFC",
-                "message_posted": "Message publié !",
-                "empty_message": "Le message ne peut pas être vacío",
-                "login_required": "Vous devez vous connecter para publicar mensajes",
-                "registration_error": "Erreur d'inscription. Veuillez réessayer.",
-                "email_exists": "Cet email est déjà enregistré",
-                "login_error": "Email ou mot de passe incorrect",
-                "save_changes": "Modifications enregistrées",
-                "save_error": "Erreur d'enregistrement",
-                "active": "Actif",
-                "inactive": "Inactif",
-                "referrals_load_error": "Erreur de chargement des parrainages",
-                "social_load_error": "Erreur de chargement des messages",
-                "message_post_error": "Erreur de publication du message"
-            },
-            ar: {
-                "login_title": "تسجيل الدخول",
-                "email_label": "البريد الإلكتروني",
-                "password_label": "كلمة المرور",
-                "password_placeholder": "أدخل كلمة المرور",
-                "login_button": "تسجيل الدخول",
-                "no_account": "ليس لديك حساب؟",
-                "register_now": "سجل الآن",
-                "register_title": "التسجيل",
-                "full_name": "الاسم الكامل",
-                "name_placeholder": "محمد أحمد",
-                "password_placeholder_register": "6 أحرف على الأقل",
-                "referral_code": "كود الإحالة",
-                "optional": "(اختياري)",
-                "create_account": "إنشاء حساب",
-                "have_account": "¿هل لديك حساب؟",
-                "login_now": "تسجيل الدخول",
-                "success_title": "تم التسجيل بنجاح!",
-                "platform_tagline": "منصة الأمازيغ",
-                "mining_title": "منصة RIFC",
-                "active_refs": "الإحالات النشطة",
-                "to_claim": "المجموع للمطالبة",
-                "ready_to_claim": "جاهز للمطالبة",
-                "claim_mining": "مطالبة RIFC",
-                "referrals_title": "إحالاتك",
-                "total_refs": "إجمالي الإحaciones",
-                "earned_rifc": "RIFC المكتسبة",
-                "copy_link": "نسخ الرابط",
-                "social_title": "الرسائل الاجتماعية",
-                "post_message": "نشر رسالة",
-                "social_placeholder": "اكتب رسالتك العامة هنا...",
-                "post_button": "نشر الرسالة",
-                "account_settings": "إعدادات الحساب",
-                "name": "الاسم",
-                "new_password": "كلمة مرور جديدة",
-                "new_password_placeholder": "اتركه فارغًا للحفاظ على الحالي",
-                "save_changes": "حفظ التغييرات",
-                "logout": "تسجيل الخروج",
-                "mining_nav": "الرئيسية",
-                "referrals_nav": "الإحالات",
-                "social_nav": "اجتماعي",
-                "account_nav": "الحساب",
-                "welcome_bonus": "مرحبًا! لقد تلقيت 100 RIFC كمكافأة.",
-                "welcome_back": "مرحبًا بعودتك",
-                "toast_copied": "تم نسخ الرابط!",
-                "toast_logged_out": "تم تسجيل الخروج",
-                "fill_all": "يرجى ملء جميع الحقول",
-                "password_min": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-                "loading": "جار التحميل...",
-                "creating": "جارٍ الإنشاء...",
-                "posting": "جارٍ النشر...",
-                "saving": "جارٍ الحفظ...",
-                "language_changed": "تم تغيير اللغة",
-                "mining_claimed": "تم المطالبة بـ RIFC!",
-                "mining_in_progress": "جارٍ المعالجة...",
-                "mining_error": "خطأ في المطالبة بـ RIFC",
-                "message_posted": "تم نشر الرسالة!",
-                "empty_message": "لا يمكن أن تكون الرسالة فارغة",
-                "login_required": "يجب تسجيل الدخول لنشر الرسائل",
-                "registration_error": "خطأ في التسجيل. يرجى المحاولة مرة أخرى.",
-                "email_exists": "هذا البريد الإلكتروني مسجل بالفعل",
-                "login_error": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
-                "save_changes": "تم حفظ التغييرات",
-                "save_error": "خطأ في الحفظ",
-                "active": "نشط",
-                "inactive": "غير نشط",
-                "referrals_load_error": "خطأ في تحميل الإحالات",
-                "social_load_error": "خطأ в تحميل الرسائل",
-                "message_post_error": "خطأ في نشر الرسالة"
-            },
-            amz: {
-                "login_title": "ⴰⴷⴽⴽⵍ ⵓⵙⵉⴷ",
-                "email_label": "ⵉⵎⴰⵢⵍ",
-                "password_label": "ⴰⵡⴰⵍ ⵏ ⵓⵎⴰⵍ",
-                "password_placeholder": "ⴽⵛⵎ ⴰⵡⴰⵍ ⵏ ⵓⵎⴰⵍ",
-                "login_button": "ⴰⴷⴽⴽⵍ ⵓⵙⵉⴷ",
-                "no_account": "ⵓⵔ ⵜⴳⵉⵙ ⵓⵎⵙⴷⴰⵔ ⵏⵏⵓⵏ?",
-                "register_now": "ⴰⵏⵙⴳⵎ ⴷⴰⴱⴰⵏⵜ",
-                "register_title": "ⴰⵏⵙⴳⵎ",
-                "full_name": "ⵉⵙⵎ ⵉⵏⵙⴱⴰⵏ",
-                "name_placeholder": "ⵎⵓⵃⵎⵎⴷ ⴰⵃⵎⴷ",
-                "password_placeholder_register": "ⴰⴷⵍⵉⵙ ⵙ ⵙⵔⴰⵜⴰ 6",
-                "referral_code": "ⵜⴰⵎⴰⵜⵜ ⵏ ⵓⵎⵙⴷⴰⵔ",
-                "optional": "(ⵓⵔ ⵉⵙⵖⴰⵍⵏ)",
-                "create_account": "ⵙⵏⴼⵍ ⵓⵎⵙⴷⴰⵔ",
-                "have_account": "ⵉⵙ ⵜⴳⵉⵙ ⵓⵎⵙⴷⴰⵔ ⵏⵏⵓⵏ?",
-                "login_now": "ⴽⵛⵎ ⵜⵉⵎⵍⵉⵍⵜ ⴷⴰⴱⴰⵏⵜ",
-                "success_title": "ⵜⵉⵏⵎⵍⵉⵍⵜ ⵜⴰⵎⴰⵜⵜ!",
-                "platform_tagline": "ⴰⵙⵉⵜⵡ ⴰⵎⴰⵣⵉⵖ",
-                "mining_title": "ⴰⵙⵉⵜⵡ RIFC",
-                "active_refs": "ⵉⵎⵙⴷⴰⵔⵏ ⵉⵎⵙⴰⵢⴰⵏ",
-                "to_claim": "ⴰⴷⵍⵉⵙ ⵉ ⵢⵥⵥⵔⴰ ⵏ ⵓⵙⵔⴷⵓ",
-                "ready_to_claim": "ⴰⵔⵎⴰⵙ ⴰ ⵢⵥⵥⵔⴰ ⵏ ⵓⵙⵔⴷⵓ",
-                "claim_mining": "ⵥⵥⵔⵉ RIFC",
-                "referrals_title": "ⵉⵎⵙⴷⴰⵔⵏ ⵏⵏⵓⵏ",
-                "total_refs": "ⵉⵎⵙⴷⴰⵔⵏ ⵉⵏⵙⴱⴰⵏ",
-                "earned_rifc": "RIFC ⵉ ⵥⵥⵔⴰⵏ",
-                "copy_link": "ⵙⴳⵍⴷ ⴰⵙⵇⵇⵉⵎ",
-                "social_title": "ⵉⵙⵖⴰⵍⵙⵏ ⵉⵎⴰⵙⴷⴰⵔⵏ",
-                "post_message": "ⴰⵔⵓ ⵉⵙⵖⴰⵍ",
-                "social_placeholder": "ⴰⵔⵓ ⵓⵙⵖⴰⵍ ⵏⵏⵓⵏ ⵉⵎⴰⵙⴷⴰⵔⵏ ⴷⴰ...",
-                "post_button": "ⴰⵔⵓ ⵉⵙⵖⴰⵍ",
-                "account_settings": "ⵉⵙⵇⵇⴰⵔⴰⵏ ⵏ ⵓⵎⵙⴷⴰⵔ",
-                "name": "ⵉⵙⵎ",
-                "new_password": "ⴰⵡⴰⵍ ⴰⵎⴰⵢⵏⵓ ⵏ ⵓⵎⴰⵍ",
-                "new_password_placeholder": "ⵙⵖⵍ ⴰⴷ ⵜⵉⵥⵔⵉⴷ ⵏ ⵓⵎⵙⵙⵓⵖⵍ",
-                "save_changes": "ⵙⵖⵍ ⵉⵙⵇⵇⴰⵔⴰⵏ",
-                "logout": "ⴼⴼⵖ ⵜⵉⵎⵍⵉⵍⵜ",
-                "mining_nav": "ⴰⵙⵏⵓⴱⴱⵓ",
-                "referrals_nav": "ⵉⵎⵙⴷⴰⵔⵏ",
-                "social_nav": "ⵉⵎⴰⵙⴷⴰⵔⵏ",
-                "account_nav": "ⴰⵎⵙⴷⴰⵔ",
-                "welcome_bonus": "ⴰⵏⵙⵖⴰⵍⵏ! ⵜⵥⵔⵉⴷ 100 RIFC ⴷ ⵜⵉⵎⴰⵜⵜ.",
-                "welcome_back": "ⴰⵏⵙⵖⴰⵍⵏ ⴰⵖⵓⵍ ⴰⴷ ⵜⵓⵔⵜ!",
-                "toast_copied": "ⵜⵥⵔⵉ ⴰⵙⵇⵇⵉⵎ!",
-                "toast_logged_out": "ⵜⴼⴼⵖⴷ ⵜⵉⵎⵍⵉⵍⵜ",
-                "fill_all": "ⵙⵖⵍ ⴰⴷ ⵜⵙⵎⵍⵉⵙⵜ ⴽⵓⵍⵛⵉ ⵏ ⵉⵎⵖⵔⴰⵏ",
-                "password_min": "ⵉⵍⴰⵖ ⴰⵡⴰⵍ ⵏ ⵓⵎⴰⵍ ⵙ ⵙⵔⴰⵜⴰ 6",
-                "loading": "ⴰⵔⴰⵙ ⵢⵣⴷⵉ...",
-                "creating": "ⴰⵔⴰⵙ ⴰⵏⵙⴳⵎ...",
-                "posting": "ⴰⵔⴰⵙ ⴰⵔⵓ ⵉⵙⵖⴰⵍ...",
-                "saving": "ⴰⵔⴰⵙ ⵙⵖⵍ ⵉⵙⵇⵇⴰⵔⴰⵏ...",
-                "language_changed": "ⵜⵓⵜⵍⴰⵢⵜ ⵜⵓⵜⵍⵉⵙⵜ",
-                "mining_claimed": "ⵜⵥⵔⵉ RIFC!",
-                "mining_in_progress": "ⴰⵙⵔⴷⵓ ⴰⵔⴰ ⵢⵣⴷⵉ",
-                "mining_error": "ⵜⴰⵙⵖⴰⵍⵜ ⵙ ⵓⵙⵔⴷⵓ ⵏ RIFC",
-                "message_posted": "ⵜⵥⵔⵉ ⵓⵙⵖⴰⵍ!",
-                "empty_message": "ⵓⵙⵖⴰⵍ ⵓⵔ ⵉⵍⴰⵖ ⴰⴷ ⵉⵍⵍⵉ ⵡⴰⵍⵓ",
-                "login_required": "ⵉⵍⴰⵖ ⴰⴷ ⵜⴽⵛⵎⴷ ⴰⴷ ⵜⴰⵔⵓ ⵓⵙⵖⴰⵍ",
-                "registration_error": "ⵜⴰⵙⵖⴰⵍⵜ ⴰⵏⵙⴳⵎ. ⴰⵖⵓⵍ ⴰⴷ ⵜⴰⵖⵓⵍⵉⴷ.",
-                "email_exists": "ⵉⵎⴰⵢⵍ ⴰⴷ ⵢⵍⵍⴰ ⵉⵍⵍⵉ ⵙⵙⵓⵏⴷⴰⵏ",
-                "login_error": "ⵉⵎⴰⵢⵍ ⵏⵏⵖ ⵏⵉⵙⵙⵉ ⵏ ⵓⵎⴰⵍ ⵓⵔ ⵜⵉⵍⵍⵉ",
-                "save_changes": "ⵉⵙⵇⵇⴰⵔⴰⵏ ⵙⵖⵍⵏ",
-                "save_error": "ⵜⴰⵙⵖⴰⵍⵜ ⵙ ⵓⵙⵔⴷⵓ ⵏ ⵉⵙⵇⵇⴰⵔⴰⵏ",
-                "active": "ⵓⵔⵎⴰⵙ",
-                "inactive": "ⵓⵔⵉⵍⵉ",
-                "referrals_load_error": "ⵜⴰⵙⵖⴰⵍⵜ ⵙ ⵓⵙⵔⴷⵓ ⵏ ⵉⵎⵙⴷⴰⵔⵏ",
-                "social_load_error": "ⵜⴰⵙⵖⴰⵍⵜ ⵙ ⵓⵙⵔⴷⵓ ⵏ ⵉⵙⵖⴰⵍⵙⵏ",
-                "message_post_error": "ⵜⴰⵙⵖⴰⵍⵜ ⵙ ⵓⵙⵔⴷⵓ ⵏ ⵓⵙⵖⴰⵍ"
-            }
-        };
-
-        // Inicialización al cargar el documento
+        // Inicializar la aplicación cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            // Configurar idioma por defecto
-            setLanguage(currentLanguage);
-            
             // Inicializar Supabase
-            initSupabase();
+            if (initSupabase()) {
+                // Verificar si hay una sesión activa
+                checkSession();
+            }
             
-            // Verificar sesión existente
-            checkSession();
-            
-            // Procesar parámetros de URL
-            processUrlParams();
-            
-            // Event listeners para mostrar/ocultar contraseña
-            document.getElementById('login-password-toggle').addEventListener('click', function() {
-                togglePasswordVisibility('login-password', 'login-password-toggle');
-            });
-            
-            document.getElementById('register-password-toggle').addEventListener('click', function() {
-                togglePasswordVisibility('register-password', 'register-password-toggle');
-            });
-            
-            document.getElementById('account-password-toggle').addEventListener('click', function() {
-                togglePasswordVisibility('account-password', 'account-password-toggle');
-            });
-            
-            // Event listeners
-            document.getElementById('login-submit-btn').addEventListener('click', loginUser);
-            document.getElementById('register-submit-btn').addEventListener('click', registerUser);
-            document.getElementById('switch-to-register').addEventListener('click', () => {
+            // Configurar event listeners para los botones de cambio de formulario
+            document.getElementById('switch-to-register').addEventListener('click', function() {
                 document.getElementById('login-form').style.display = 'none';
                 document.getElementById('register-form').style.display = 'block';
             });
-            document.getElementById('switch-to-login').addEventListener('click', () => {
+            
+            document.getElementById('switch-to-login').addEventListener('click', function() {
                 document.getElementById('register-form').style.display = 'none';
                 document.getElementById('login-form').style.display = 'block';
             });
-            document.getElementById('claim-btn').addEventListener('click', claimMining);
-            document.getElementById('copy-btn').addEventListener('click', copyReferralLink);
-            document.getElementById('logout-btn').addEventListener('click', logoutUser);
-            document.getElementById('post-message-btn').addEventListener('click', postSocialMessage);
-            document.getElementById('save-account-btn').addEventListener('click', saveAccountChanges);
-            document.getElementById('save-supabase-btn').addEventListener('click', saveSupabaseConfig);
-            document.getElementById('nav-mining').addEventListener('click', () => showSection('mining'));
-            document.getElementById('nav-referrals').addEventListener('click', () => showSection('referrals'));
-            document.getElementById('nav-social').addEventListener('click', () => showSection('social'));
-            document.getElementById('nav-account').addEventListener('click', () => showSection('account'));
             
-            // Selector de idiomas
-            document.getElementById('language-btn').addEventListener('click', function() {
-                document.getElementById('language-dropdown').classList.toggle('show');
-            });
-            
-            // Opciones de idioma
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    setLanguage(lang);
-                });
-            });
-            
-            // Cerrar menú de idiomas al hacer clic fuera
-            document.addEventListener('click', function(event) {
-                const languageBtn = document.getElementById('language-btn');
-                const dropdown = document.getElementById('language-dropdown');
-                if (!languageBtn.contains(event.target) && !dropdown.contains(event.target)) {
-                    dropdown.classList.remove('show');
-                }
-            });
+            // Configurar event listeners para los botones de envío
+            document.getElementById('login-submit-btn').addEventListener('click', loginUser);
+            document.getElementById('register-submit-btn').addEventListener('click', registerUser);
         });
     </script>
 </body>
