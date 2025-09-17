@@ -196,7 +196,7 @@
         .input-group input {
             width: 100%;
             padding: 12px 15px;
-            padding-right: 45px;
+            padding-right: 45px; /* Espacio para el icono de ojo */
             border-radius: 10px;
             border: 1px solid var(--amazigh-green);
             background: rgba(0, 0, 0, 0.3);
@@ -713,6 +713,7 @@
             font-weight: 600;
         }
         
+        /* Nuevos estilos para funcionalidades añadidas */
         .logout-btn {
             width: 38px;
             height: 38px;
@@ -798,6 +799,7 @@
             font-size: 1rem;
             margin-bottom: 8px;
             color: var(--amazigh-light);
+            font-weight: 600;
         }
         
         .reward-value {
@@ -1266,24 +1268,57 @@
         let countdownInterval = null;
         let remainingTime = 300; // 5 minutos en segundos
         
+        // Configuración de Supabase
+        const SUPABASE_URL = 'https://sngcgcjpcjdobnsaygxm.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_5om8pe6L-wBryF7rdCR6KA_IKSRtEyG';
+        
         // Inicializar la aplicación cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', async function() {
             // Crear partículas de fondo
             createParticles();
             
-            // Configurar event listeners
-            setupEventListeners();
-            
             // Inicializar Supabase
             await initializeSupabase();
             
-            // Ocultar pantalla de carga después de un tiempo máximo
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Verificar si hay una sesión activa
+            await checkCurrentSession();
+            
+            // Ocultar pantalla de carga
             setTimeout(() => {
-                if (document.getElementById('loading').style.display !== 'none') {
-                    hideLoading();
-                }
-            }, 10000);
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 1500);
         });
+        
+        // Inicializar Supabase
+        async function initializeSupabase() {
+            try {
+                // Crear cliente Supabase
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase inicializado correctamente');
+                
+                // Escuchar cambios en la autenticación
+                supabase.auth.onAuthStateChange(async (event, session) => {
+                    if (event === 'SIGNED_IN' && session) {
+                        currentUser = session.user;
+                        await loadUserData();
+                        showApp();
+                    } else if (event === 'SIGNED_OUT') {
+                        currentUser = null;
+                        userProfile = null;
+                        showAuth();
+                    }
+                });
+            } catch (error) {
+                console.error('Error al inicializar Supabase:', error);
+                showError(document.getElementById('loginError'), 'Error de conexión. Por favor, inténtalo más tarde.');
+            }
+        }
         
         // Configurar event listeners
         function setupEventListeners() {
@@ -1300,6 +1335,10 @@
                 clearMessages();
             });
             
+            // Botones de inicio de sesión y registro
+            document.getElementById('loginBtn').addEventListener('click', login);
+            document.getElementById('registerBtn').addEventListener('click', register);
+            
             // Toggle de visibilidad de contraseña
             document.getElementById('loginPasswordToggle').addEventListener('click', () => {
                 togglePasswordVisibility('loginPassword', 'loginPasswordToggle');
@@ -1308,10 +1347,6 @@
             document.getElementById('registerPasswordToggle').addEventListener('click', () => {
                 togglePasswordVisibility('registerPassword', 'registerPasswordToggle');
             });
-            
-            // Botones de inicio de sesión y registro
-            document.getElementById('loginBtn').addEventListener('click', login);
-            document.getElementById('registerBtn').addEventListener('click', register);
             
             // Botón de reclamar
             document.getElementById('claimBtn').addEventListener('click', claimCoins);
@@ -1367,45 +1402,14 @@
             document.getElementById('clearCacheBtn').addEventListener('click', clearCache);
         }
         
-        // Inicializar Supabase
-        async function initializeSupabase() {
-            try {
-                // Configuración de Supabase
-                const SUPABASE_URL = 'https://sngcgcjpcjdobnsaygxm.supabase.co';
-                const SUPABASE_ANON_KEY = 'sb_publishable_5om8pe6L-wBryF7rdCR6KA_IKSRtEyG';
-                
-                // Crear cliente Supabase
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                
-                // Escuchar cambios en la autenticación
-                supabase.auth.onAuthStateChange(async (event, session) => {
-                    if (event === 'SIGNED_IN' && session) {
-                        currentUser = session.user;
-                        await loadUserData();
-                        showApp();
-                    } else if (event === 'SIGNED_OUT') {
-                        currentUser = null;
-                        userProfile = null;
-                        hideApp();
-                    }
-                });
-                
-                // Verificar si hay una sesión activa
-                await checkCurrentSession();
-                
-            } catch (error) {
-                console.error('Error al inicializar Supabase:', error);
-                showError(document.getElementById('loginError'), 'Error de conexión. Por favor, inténtalo más tarde.');
-            }
-        }
-        
         // Verificar si hay una sesión activa
         async function checkCurrentSession() {
             try {
                 const { data, error } = await supabase.auth.getSession();
                 
                 if (error) {
-                    throw error;
+                    console.error('Error al verificar sesión:', error);
+                    return;
                 }
                 
                 if (data.session) {
@@ -1413,12 +1417,9 @@
                     currentUser = data.session.user;
                     await loadUserData();
                     showApp();
-                } else {
-                    hideLoading();
                 }
             } catch (error) {
-                console.error('Error al verificar sesión:', error);
-                hideLoading();
+                console.error('Error inesperado al verificar sesión:', error);
             }
         }
         
@@ -1434,7 +1435,7 @@
                 return;
             }
             
-            showLoading();
+            showLoading(true);
             
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({
@@ -1454,7 +1455,7 @@
                 console.error('Error al iniciar sesión:', error);
                 showError(errorElement, 'Error al iniciar sesión: ' + error.message);
             } finally {
-                hideLoading();
+                showLoading(false);
             }
         }
         
@@ -1477,7 +1478,14 @@
                 return;
             }
             
-            showLoading();
+            // Validar formato de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError(errorElement, 'Por favor, introduce un email válido.');
+                return;
+            }
+            
+            showLoading(true);
             
             try {
                 // Crear usuario en Auth
@@ -1495,26 +1503,41 @@
                     throw authError;
                 }
                 
-                // Crear perfil de usuario en la base de datos
-                const { error: profileError } = await supabase
-                    .from('profiles')
-                    .insert([
-                        {
-                            id: authData.user.id,
-                            full_name: name,
-                            email: email,
-                            referral_code: generateReferralCode(),
-                            referred_by: referralCode || null,
-                            balance: 100, // Balance inicial de 100 RIFC
-                            total_mined: 0,
-                            total_earned: 0,
-                            mining_power: 1,
-                            claims_count: 0
-                        }
-                    ]);
+                // Generar código de referido
+                const referralCodeGenerated = generateReferralCode();
+                
+                // Crear perfil de usuario en la base de datos usando RPC
+                const { error: profileError } = await supabase.rpc('create_user_profile', {
+                    user_id: authData.user.id,
+                    user_name: name,
+                    user_email: email,
+                    ref_code: referralCodeGenerated,
+                    referred_by_code: referralCode || null
+                });
                 
                 if (profileError) {
-                    throw profileError;
+                    // Si falla el RPC, intentar con inserción directa
+                    console.warn('Falló RPC, intentando inserción directa:', profileError);
+                    
+                    const { error: directError } = await supabase
+                        .from('profiles')
+                        .insert([
+                            {
+                                id: authData.user.id,
+                                full_name: name,
+                                email: email,
+                                referral_code: referralCodeGenerated,
+                                referred_by: referralCode || null,
+                                balance: 0,
+                                total_mined: 0,
+                                total_earned: 0,
+                                mining_power: 1
+                            }
+                        ]);
+                    
+                    if (directError) {
+                        throw directError;
+                    }
                 }
                 
                 showSuccess(document.getElementById('registerSuccess'), '¡Cuenta creada exitosamente! Revisa tu email para confirmar tu cuenta.');
@@ -1527,9 +1550,9 @@
                 
             } catch (error) {
                 console.error('Error al registrarse:', error);
-                showError(errorElement, 'Error al crear la cuenta: ' + error.message);
+                showError(errorElement, 'Error al crear la cuenta: ' + (error.message || 'Por favor, verifica tu conexión e intenta nuevamente.'));
             } finally {
-                hideLoading();
+                showLoading(false);
             }
         }
         
@@ -1562,17 +1585,15 @@
                 // Actualizar estadísticas
                 document.getElementById('totalMined').textContent = userProfile.total_mined + ' RIFC';
                 document.getElementById('totalEarned').textContent = userProfile.total_earned + ' RIFC';
-                document.getElementById('miningTime').textContent = '0h 00m';
+                document.getElementById('miningTime').textContent = '0h 00m'; // Esto necesitaría calcularse
                 document.getElementById('claimsCount').textContent = userProfile.claims_count || 0;
-                document.getElementById('weeklyProgress').textContent = '0 RIFC';
+                document.getElementById('weeklyProgress').textContent = '0 RIFC'; // Esto necesitaría calcularse
                 
                 // Iniciar minería
                 startMining();
                 
             } catch (error) {
                 console.error('Error al cargar datos del usuario:', error);
-            } finally {
-                hideLoading();
             }
         }
         
@@ -1580,21 +1601,14 @@
         function showApp() {
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'flex';
-            hideLoading();
         }
         
-        // Ocultar la aplicación
-        function hideApp() {
+        // Mostrar autenticación
+        function showAuth() {
             document.getElementById('appContainer').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
-            
-            // Limpiar formularios
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-            
-            clearMessages();
         }
         
         // Iniciar minería
@@ -1671,13 +1685,13 @@
                 
             } catch (error) {
                 console.error('Error al reclamar coins:', error);
-                showError(document.getElementById('loginError'), 'Error al reclamar recompensa. Por favor, intenta nuevamente.');
+                alert('Error al reclamar recompensa. Por favor, intenta nuevamente.');
             }
         }
         
         // Cerrar sesión
         async function logout() {
-            showLoading();
+            showLoading(true);
             
             try {
                 const { error } = await supabase.auth.signOut();
@@ -1694,13 +1708,19 @@
                 currentUser = null;
                 userProfile = null;
                 
-                // Ocultar aplicación y mostrar auth
-                hideApp();
+                // Mostrar pantalla de autenticación
+                showAuth();
+                
+                // Limpiar formularios
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                
+                clearMessages();
                 
             } catch (error) {
                 console.error('Error al cerrar sesión:', error);
             } finally {
-                hideLoading();
+                showLoading(false);
             }
         }
         
@@ -1741,7 +1761,6 @@
                     cost = 100;
                     message = '¡Velocidad de minería aumentada!';
                     // Esta recompensa reduciría el tiempo de minería
-                    updateData = { mining_speed: (userProfile.mining_speed || 1) + 0.2 };
                     break;
                 case 'referral':
                     cost = 150;
@@ -1833,20 +1852,18 @@
             }
         }
         
-        // Mostrar carga
-        function showLoading() {
-            document.getElementById('loading').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('loading').style.opacity = '1';
-            }, 10);
-        }
-        
-        // Ocultar carga
-        function hideLoading() {
-            document.getElementById('loading').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-            }, 500);
+        // Mostrar/ocultar carga
+        function showLoading(show) {
+            const loadingElement = document.getElementById('loading');
+            if (show) {
+                loadingElement.style.display = 'flex';
+                loadingElement.style.opacity = '1';
+            } else {
+                loadingElement.style.opacity = '0';
+                setTimeout(() => {
+                    loadingElement.style.display = 'none';
+                }, 500);
+            }
         }
         
         // Mostrar error
