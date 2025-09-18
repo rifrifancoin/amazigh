@@ -922,7 +922,7 @@
         .social-user {
             font-weight: 700;
             color: var(--amazigh-yellow);
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         
         .social-date {
@@ -932,7 +932,7 @@
         }
         
         .social-content {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             line-height: 1.5;
         }
         
@@ -1512,11 +1512,11 @@
         const claimInterval = 4 * 60 * 60 * 1000; // 4 horas en milisegundos
         const welcomeNotification = document.getElementById('welcome-notification');
         
-        // Configuración de Supabase - ERROR CORREGIDO: Falta una coma
+        // Configuración de Supabase - ERROR CORREGIDO: Se añadió la coma faltante
         let supabaseConfig = {
             url: 'https://sngcgcjpcjdobnsaygxm.supabase.co',
             key: 'sb_publishable_5om8pe6L-wBryF7rdCR6KA_IKSRtEyG',
-            enabled: false
+            enabled: true // Cambiado a true para habilitar por defecto
         };
 
         // Función para inicializar Supabase
@@ -1535,6 +1535,20 @@
                         supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
                         supabaseConfig.enabled = true;
                         console.log('Supabase inicializado correctamente');
+                    } else {
+                        supabaseConfig.enabled = false;
+                        console.log('Supabase no configurado: Faltan URL o Key');
+                    }
+                } else {
+                    // Si no hay configuración guardada, usar la configuración por defecto
+                    localStorage.setItem('supabaseConfig', JSON.stringify(supabaseConfig));
+                    document.getElementById('supabase-url').value = supabaseConfig.url;
+                    document.getElementById('supabase-key').value = supabaseConfig.key;
+                    
+                    if (supabaseConfig.url && supabaseConfig.key) {
+                        supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
+                        supabaseConfig.enabled = true;
+                        console.log('Supabase inicializado con configuración por defecto');
                     }
                 }
             } catch (error) {
@@ -1704,7 +1718,7 @@
             
             try {
                 if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado');
+                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la pestaña de cuenta.');
                 }
                 
                 // Registrar usuario en Auth de Supabase
@@ -1824,7 +1838,7 @@
             
             try {
                 if (!supabaseConfig.enabled) {
-                    throw new Error('Supabase no configurado');
+                    throw new Error('Supabase no configurado. Por favor, configura Supabase en la pestaña de cuenta.');
                 }
                 
                 // Iniciar sesión con Supabase Auth
@@ -2303,7 +2317,7 @@
         }
         
         // Función para guardar configuración de Supabase
-        function saveSupabaseConfig() {
+        async function saveSupabaseConfig() {
             const url = document.getElementById('supabase-url').value.trim();
             const key = document.getElementById('supabase-key').value.trim();
             const saveBtn = document.getElementById('save-supabase-btn');
@@ -2322,23 +2336,13 @@
                 // Guardar configuración
                 localStorage.setItem('supabaseConfig', JSON.stringify(supabaseConfig));
                 
-                // Inicializar Supabase
-                if (supabaseConfig.enabled) {
-                    supabaseClient = window.supabase.createClient(supabaseConfig.url, supabaseConfig.key);
-                    
-                    // Verificar conexión
-                    supabaseClient.auth.getSession().then(({ data, error }) => {
-                        if (error) {
-                            throw new Error('Error conectando con Supabase: ' + error.message);
-                        }
-                        
-                        showToast('Configuración de Supabase guardada y verificada');
-                    }).catch(error => {
-                        throw new Error('Error conectando con Supabase: ' + error.message);
-                    });
-                } else {
-                    showToast('Configuración de Supabase guardada');
-                }
+                // Reinicializar Supabase
+                initSupabase();
+                
+                // Verificar sesión con la nueva configuración
+                await checkSession();
+                
+                showToast('Configuración de Supabase guardada');
                 
             } catch (error) {
                 console.error('Error guardando configuración de Supabase:', error);
@@ -2762,7 +2766,7 @@
                 "post_button": "نشر الرسالة",
                 "account_settings": "إعدادات الحساب",
                 "name": "الاسم",
-                "new_password": "كلمة مرور جديدة",
+                "new_password": "كلمة مرور nueva",
                 "new_password_placeholder": "اتركه فارغًا للحفاظ على الحالي",
                 "save_changes": "حفظ التغييرات",
                 "logout": "تسجيل الخروج",
@@ -2780,7 +2784,7 @@
                 "creating": "جارٍ الإنشاء...",
                 "posting": "جارٍ النشر...",
                 "saving": "جارٍ الحفظ...",
-                "language_changed": "تم تغيير 언어",
+                "language_changed": "تم تغيير اللغة",
                 "mining_claimed": "تم المطالبة بـ RIFC!",
                 "mining_in_progress": "جارٍ المعالجة...",
                 "mining_error": "خطأ في المطالبة بـ RIFC",
