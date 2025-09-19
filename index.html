@@ -196,7 +196,7 @@
         .input-group input {
             width: 100%;
             padding: 12px 15px;
-            padding-right: 45px; /* Espacio para el icono de ojo */
+            padding-right: 45px;
             border-radius: 10px;
             border: 1px solid var(--amazigh-green);
             background: rgba(0, 0, 0, 0.3);
@@ -551,6 +551,29 @@
             box-shadow: none;
         }
         
+        .start-mining-btn {
+            background: linear-gradient(135deg, var(--amazigh-blue), var(--amazigh-accent));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            border-radius: 45px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 800;
+            box-shadow: 0 6px 16px rgba(26, 95, 122, 0.5);
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 280px;
+        }
+        
+        .start-mining-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(26, 95, 122, 0.7);
+        }
+        
         .referral-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -757,6 +780,29 @@
             border-bottom: none;
         }
         
+        .connection-status {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .connected {
+            background: rgba(46, 204, 113, 0.3);
+            color: #1dd1a1;
+            border: 1px solid rgba(46, 204, 113, 0.5);
+        }
+        
+        .disconnected {
+            background: rgba(231, 111, 81, 0.3);
+            color: #ff6b6b;
+            border: 1px solid rgba(231, 111, 81, 0.5);
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -800,6 +846,10 @@
     </div>
     
     <div class="particles" id="particles"></div>
+    
+    <div class="connection-status disconnected" id="connectionStatus">
+        <i class="fas fa-wifi"></i> Desconectado
+    </div>
     
     <div class="container">
         <div class="auth-screen" id="authScreen">
@@ -940,7 +990,8 @@
                         <div class="timer" id="miningTimer">06:00:00</div>
                         <div class="earning-indicator" id="earningIndicator">Ganando: 0 RIFC</div>
                         
-                        <button class="claim-btn" id="claimBtn" disabled>Reclamar en 06:00:00</button>
+                        <button class="start-mining-btn" id="startMiningBtn">Iniciar Minería</button>
+                        <button class="claim-btn" id="claimBtn" disabled style="display: none;">Reclamar en 06:00:00</button>
                     </div>
                     
                     <h2 class="section-title">Programa de Referidos</h2>
@@ -1063,6 +1114,8 @@
         let remainingTime = CLAIM_INTERVAL;
         let accumulatedCoins = 0;
         let lastClaimTime = null;
+        let isMining = false;
+        let dbConnected = false;
         
         // Inicializar la aplicación cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', async function() {
@@ -1096,10 +1149,37 @@
                 
                 // Crear cliente Supabase
                 supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('Supabase inicializado correctamente');
+                
+                // Verificar conexión
+                const { data, error } = await supabase.from('profiles').select('count').limit(1);
+                
+                if (error) {
+                    console.error('Error de conexión a Supabase:', error);
+                    updateConnectionStatus(false);
+                    showError(document.getElementById('loginError'), 'Error de conexión a la base de datos. Usando modo local.');
+                } else {
+                    console.log('Conexión a Supabase establecida correctamente');
+                    dbConnected = true;
+                    updateConnectionStatus(true);
+                }
             } catch (error) {
                 console.error('Error al inicializar Supabase:', error);
-                showError(document.getElementById('loginError'), 'Error de conexión. Por favor, inténtalo más tarde.');
+                updateConnectionStatus(false);
+                showError(document.getElementById('loginError'), 'Error de conexión. Usando modo local.');
+            }
+        }
+        
+        // Actualizar estado de conexión
+        function updateConnectionStatus(connected) {
+            const statusElement = document.getElementById('connectionStatus');
+            if (connected) {
+                statusElement.className = 'connection-status connected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Conectado';
+                dbConnected = true;
+            } else {
+                statusElement.className = 'connection-status disconnected';
+                statusElement.innerHTML = '<i class="fas fa-wifi"></i> Desconectado';
+                dbConnected = false;
             }
         }
         
@@ -1131,6 +1211,9 @@
                 togglePasswordVisibility('registerPassword', 'registerPasswordToggle');
             });
             
+            // Botón de iniciar minería
+            document.getElementById('startMiningBtn').addEventListener('click', startMiningManual);
+            
             // Botón de reclamar
             document.getElementById('claimBtn').addEventListener('click', claimCoins);
             
@@ -1149,16 +1232,6 @@
                     changeLanguage(lang);
                     document.getElementById('languageDropdown').classList.remove('show');
                 });
-            });
-            
-            // Cerrar dropdown de idioma al hacer clic fuera
-            window.addEventListener('click', (e) => {
-                if (!e.target.matches('.language-btn')) {
-                    const dropdown = document.getElementById('languageDropdown');
-                    if (dropdown.classList.contains('show')) {
-                        dropdown.classList.remove('show');
-                    }
-                }
             });
             
             // Navegación
@@ -1277,7 +1350,9 @@
                             total_mined: 0,
                             total_earned: 0,
                             mining_time: 0,
-                            last_claim: new Date().toISOString()
+                            last_claim: new Date().toISOString(),
+                            is_mining: false,
+                            mining_started: null
                         }
                     }
                 });
@@ -1308,23 +1383,44 @@
             
             try {
                 // Obtener el perfil del usuario desde Supabase
-                const { data: profile, error } = await supabase
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', currentUser.id)
-                    .single();
+                let profile;
                 
-                if (error) {
-                    console.error('Error al cargar el perfil:', error);
-                    // Crear perfil si no existe
-                    await createUserProfile();
-                    return;
+                if (dbConnected) {
+                    const { data, error } = await supabase
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', currentUser.id)
+                        .single();
+                    
+                    if (error) {
+                        console.error('Error al cargar el perfil:', error);
+                        // Crear perfil si no existe
+                        await createUserProfile();
+                        return;
+                    }
+                    
+                    profile = data;
+                } else {
+                    // Modo local: usar datos por defecto
+                    profile = {
+                        full_name: currentUser.user_metadata?.full_name || 'Usuario',
+                        balance: 0,
+                        total_mined: 0,
+                        total_earned: 0,
+                        mining_time: 0,
+                        last_claim: new Date().toISOString(),
+                        referral_code: generateReferralCode(),
+                        total_referrals: 0,
+                        referral_earnings: 0,
+                        is_mining: false,
+                        mining_started: null
+                    };
                 }
                 
                 userProfile = profile;
                 
                 // Actualizar interfaz con datos del usuario
-                const userName = currentUser.user_metadata?.full_name || 'Usuario';
+                const userName = userProfile.full_name || 'Usuario';
                 const firstLetter = userName.charAt(0).toUpperCase();
                 
                 document.getElementById('userName').textContent = userName;
@@ -1339,102 +1435,121 @@
                 document.getElementById('totalEarned').textContent = `${userProfile.total_earned || 0} RIFC`;
                 document.getElementById('miningTime').textContent = `${Math.round((userProfile.mining_time || 0) / 3600)} horas`;
                 
-                // Iniciar minería
-                startMining();
+                // Verificar si la minería estaba activa
+                if (userProfile.is_mining && userProfile.mining_started) {
+                    const miningStarted = new Date(userProfile.mining_started);
+                    const now = new Date();
+                    const elapsedSeconds = Math.floor((now - miningStarted) / 1000);
+                    
+                    if (elapsedSeconds < CLAIM_INTERVAL) {
+                        // Continuar minería
+                        remainingTime = CLAIM_INTERVAL - elapsedSeconds;
+                        accumulatedCoins = (elapsedSeconds / CLAIM_INTERVAL) * 6;
+                        isMining = true;
+                        startMining();
+                    } else {
+                        // La minería ha completado un ciclo
+                        accumulatedCoins = 6;
+                        remainingTime = 0;
+                        isMining = true;
+                        updateMiningUI();
+                    }
+                } else {
+                    // Mostrar botón para iniciar minería
+                    showStartMiningButton();
+                }
                 
             } catch (error) {
                 console.error('Error al cargar datos del usuario:', error);
             }
         }
         
-        // Crear perfil de usuario
-        async function createUserProfile() {
-            try {
-                const { data, error } = await supabase
-                    .from('profiles')
-                    .insert([
-                        {
-                            id: currentUser.id,
-                            full_name: currentUser.user_metadata.full_name,
-                            email: currentUser.email,
-                            referral_code: currentUser.user_metadata.referral_code,
-                            referred_by: currentUser.user_metadata.referred_by,
-                            balance: 0,
-                            total_mined: 0,
-                            total_earned: 0,
-                            mining_time: 0,
-                            last_claim: new Date().toISOString(),
-                            total_referrals: 0,
-                            referral_earnings: 0
-                        }
-                    ])
-                    .select();
-                
-                if (error) {
-                    throw error;
-                }
-                
-                userProfile = data[0];
-                await loadUserData();
-                
-            } catch (error) {
-                console.error('Error al crear perfil de usuario:', error);
-            }
+        // Mostrar botón de iniciar minería
+        function showStartMiningButton() {
+            document.getElementById('startMiningBtn').style.display = 'block';
+            document.getElementById('claimBtn').style.display = 'none';
+            isMining = false;
+            remainingTime = CLAIM_INTERVAL;
+            accumulatedCoins = 0;
+            document.getElementById('miningTimer').textContent = '06:00:00';
+            document.getElementById('earningIndicator').textContent = 'Ganando: 0 RIFC';
         }
         
-        // Mostrar la aplicación
-        function showApp() {
-            document.getElementById('authScreen').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'flex';
+        // Iniciar minería manualmente
+        async function startMiningManual() {
+            try {
+                showLoading(true);
+                
+                if (dbConnected) {
+                    // Actualizar perfil en Supabase
+                    const { error } = await supabase
+                        .from('profiles')
+                        .update({
+                            is_mining: true,
+                            mining_started: new Date().toISOString()
+                        })
+                        .eq('id', currentUser.id);
+                    
+                    if (error) {
+                        throw error;
+                    }
+                    
+                    userProfile.is_mining = true;
+                    userProfile.mining_started = new Date().toISOString();
+                } else {
+                    // Modo local
+                    userProfile.is_mining = true;
+                    userProfile.mining_started = new Date().toISOString();
+                    // Guardar en localStorage
+                    localStorage.setItem('rifrifancoin_profile', JSON.stringify(userProfile));
+                }
+                
+                isMining = true;
+                remainingTime = CLAIM_INTERVAL;
+                accumulatedCoins = 0;
+                
+                // Ocultar botón de iniciar y mostrar botón de reclamar
+                document.getElementById('startMiningBtn').style.display = 'none';
+                document.getElementById('claimBtn').style.display = 'block';
+                document.getElementById('claimBtn').disabled = true;
+                
+                // Iniciar minería
+                startMining();
+                
+            } catch (error) {
+                console.error('Error al iniciar minería:', error);
+                showError(document.getElementById('loginError'), 'Error al iniciar minería. Intenta nuevamente.');
+            } finally {
+                showLoading(false);
+            }
         }
         
         // Iniciar minería
         function startMining() {
             // Detener cualquier intervalo previo
-            if (miningInterval) clearInterval(miningInterval);
             if (countdownInterval) clearInterval(countdownInterval);
             
-            // Calcular tiempo transcurrido desde el último reclamo
-            const lastClaim = new Date(userProfile.last_claim);
-            const now = new Date();
-            const elapsedSeconds = Math.floor((now - lastClaim) / 1000);
+            // Actualizar UI
+            updateMiningUI();
             
-            // Si ha pasado más de 6 horas, el usuario puede reclamar
-            if (elapsedSeconds >= CLAIM_INTERVAL) {
-                // Puede reclamar inmediatamente
-                remainingTime = 0;
-                accumulatedCoins = 6; // 6 horas = 6 RIFC (1 RIFC por hora)
-                document.getElementById('claimBtn').disabled = false;
-                document.getElementById('claimBtn').textContent = '¡Reclamar 6 RIFC!';
-                document.getElementById('miningTimer').textContent = '00:00:00';
-            } else {
-                // Calcular tiempo restante y coins acumulados
-                remainingTime = CLAIM_INTERVAL - elapsedSeconds;
-                accumulatedCoins = (elapsedSeconds / CLAIM_INTERVAL) * 6;
-                
-                document.getElementById('claimBtn').disabled = true;
-                updateTimer();
-                
-                // Iniciar cuenta regresiva
-                countdownInterval = setInterval(() => {
+            // Iniciar cuenta regresiva
+            countdownInterval = setInterval(() => {
+                if (isMining) {
                     remainingTime--;
                     accumulatedCoins += 1 / 3600; // 1 RIFC por hora = 1/3600 por segundo
-                    updateTimer();
+                    updateMiningUI();
                     
                     if (remainingTime <= 0) {
                         clearInterval(countdownInterval);
                         document.getElementById('claimBtn').disabled = false;
                         document.getElementById('claimBtn').textContent = '¡Reclamar 6 RIFC!';
                     }
-                }, 1000);
-            }
-            
-            // Actualizar indicador de ganancias
-            updateEarningIndicator();
+                }
+            }, 1000);
         }
         
-        // Actualizar temporizador
-        function updateTimer() {
+        // Actualizar UI de minería
+        function updateMiningUI() {
             const hours = Math.floor(remainingTime / 3600);
             const minutes = Math.floor((remainingTime % 3600) / 60);
             const seconds = remainingTime % 60;
@@ -1444,16 +1559,12 @@
             
             if (remainingTime > 0) {
                 document.getElementById('claimBtn').textContent = `Reclamar en ${formattedTime}`;
+                document.getElementById('claimBtn').disabled = true;
+            } else {
+                document.getElementById('claimBtn').textContent = '¡Reclamar 6 RIFC!';
+                document.getElementById('claimBtn').disabled = false;
             }
             
-            // Actualizar indicador de ganancias cada 10 segundos
-            if (remainingTime % 10 === 0) {
-                updateEarningIndicator();
-            }
-        }
-        
-        // Actualizar indicador de ganancias
-        function updateEarningIndicator() {
             document.getElementById('earningIndicator').textContent = `Ganando: ${accumulatedCoins.toFixed(4)} RIFC`;
         }
         
@@ -1466,41 +1577,123 @@
                 // Calcular recompensa (mínimo 0.0001 RIFC)
                 const reward = Math.max(accumulatedCoins, 0.0001);
                 
-                // Actualizar perfil en Supabase
-                const { data, error } = await supabase
-                    .from('profiles')
-                    .update({
-                        balance: userProfile.balance + reward,
-                        total_mined: userProfile.total_mined + reward,
-                        total_earned: userProfile.total_earned + reward,
-                        mining_time: userProfile.mining_time + (CLAIM_INTERVAL - remainingTime),
-                        last_claim: new Date().toISOString()
-                    })
-                    .eq('id', currentUser.id)
-                    .select();
-                
-                if (error) {
-                    throw error;
+                if (dbConnected) {
+                    // Actualizar perfil en Supabase
+                    const { data, error } = await supabase
+                        .from('profiles')
+                        .update({
+                            balance: userProfile.balance + reward,
+                            total_mined: userProfile.total_mined + reward,
+                            total_earned: userProfile.total_earned + reward,
+                            mining_time: userProfile.mining_time + (CLAIM_INTERVAL - remainingTime),
+                            last_claim: new Date().toISOString(),
+                            is_mining: false,
+                            mining_started: null
+                        })
+                        .eq('id', currentUser.id)
+                        .select();
+                    
+                    if (error) {
+                        throw error;
+                    }
+                    
+                    userProfile = data[0];
+                } else {
+                    // Modo local
+                    userProfile.balance += reward;
+                    userProfile.total_mined += reward;
+                    userProfile.total_earned += reward;
+                    userProfile.mining_time += (CLAIM_INTERVAL - remainingTime);
+                    userProfile.last_claim = new Date().toISOString();
+                    userProfile.is_mining = false;
+                    userProfile.mining_started = null;
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem('rifrifancoin_profile', JSON.stringify(userProfile));
                 }
                 
-                userProfile = data[0];
-                
                 // Actualizar interfaz
-                document.getElementById('userBalance').textContent = `${userProfile.balance} RIFC`;
-                document.getElementById('totalMined').textContent = `${userProfile.total_mined} RIFC`;
-                document.getElementById('totalEarned').textContent = `${userProfile.total_earned} RIFC`;
+                document.getElementById('userBalance').textContent = `${userProfile.balance.toFixed(2)} RIFC`;
+                document.getElementById('totalMined').textContent = `${userProfile.total_mined.toFixed(2)} RIFC`;
+                document.getElementById('totalEarned').textContent = `${userProfile.total_earned.toFixed(2)} RIFC`;
                 document.getElementById('miningTime').textContent = `${Math.round(userProfile.mining_time / 3600)} horas`;
                 
                 // Reiniciar minería
                 accumulatedCoins = 0;
                 remainingTime = CLAIM_INTERVAL;
-                startMining();
+                isMining = false;
+                
+                // Mostrar botón de iniciar minería
+                showStartMiningButton();
+                
+                showSuccess(document.getElementById('loginSuccess'), `¡Has reclamado ${reward.toFixed(2)} RIFC!`);
                 
             } catch (error) {
                 console.error('Error al reclamar coins:', error);
                 showError(document.getElementById('loginError'), 'Error al reclamar coins. Intenta nuevamente.');
                 document.getElementById('claimBtn').disabled = false;
                 document.getElementById('claimBtn').textContent = '¡Reclamar Recompensa!';
+            }
+        }
+        
+        // Crear perfil de usuario
+        async function createUserProfile() {
+            try {
+                if (dbConnected) {
+                    const { data, error } = await supabase
+                        .from('profiles')
+                        .insert([
+                            {
+                                id: currentUser.id,
+                                full_name: currentUser.user_metadata.full_name,
+                                email: currentUser.email,
+                                referral_code: currentUser.user_metadata.referral_code,
+                                referred_by: currentUser.user_metadata.referred_by,
+                                balance: 0,
+                                total_mined: 0,
+                                total_earned: 0,
+                                mining_time: 0,
+                                last_claim: new Date().toISOString(),
+                                total_referrals: 0,
+                                referral_earnings: 0,
+                                is_mining: false,
+                                mining_started: null
+                            }
+                        ])
+                        .select();
+                    
+                    if (error) {
+                        throw error;
+                    }
+                    
+                    userProfile = data[0];
+                } else {
+                    // Modo local
+                    userProfile = {
+                        id: currentUser.id,
+                        full_name: currentUser.user_metadata.full_name,
+                        email: currentUser.email,
+                        referral_code: currentUser.user_metadata.referral_code,
+                        referred_by: currentUser.user_metadata.referred_by,
+                        balance: 0,
+                        total_mined: 0,
+                        total_earned: 0,
+                        mining_time: 0,
+                        last_claim: new Date().toISOString(),
+                        total_referrals: 0,
+                        referral_earnings: 0,
+                        is_mining: false,
+                        mining_started: null
+                    };
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem('rifrifancoin_profile', JSON.stringify(userProfile));
+                }
+                
+                await loadUserData();
+                
+            } catch (error) {
+                console.error('Error al crear perfil de usuario:', error);
             }
         }
         
@@ -1528,10 +1721,12 @@
             try {
                 showLoading(true);
                 
-                const { error } = await supabase.auth.signOut();
-                
-                if (error) {
-                    throw error;
+                if (supabase) {
+                    const { error } = await supabase.auth.signOut();
+                    
+                    if (error) {
+                        throw error;
+                    }
                 }
                 
                 // Limpiar variables
