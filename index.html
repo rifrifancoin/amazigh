@@ -713,6 +713,50 @@
             font-weight: 600;
         }
         
+        .earning-indicator {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: var(--amazigh-yellow);
+            font-weight: 600;
+        }
+        
+        .logout-btn {
+            background: rgba(231, 111, 81, 0.2);
+            color: #ff6b6b;
+            border: 1px solid rgba(231, 111, 81, 0.5);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(231, 111, 81, 0.4);
+        }
+        
+        .stats-container, .rewards-container, .settings-container {
+            display: none;
+            background: rgba(38, 70, 83, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(42, 157, 143, 0.3);
+        }
+        
+        .settings-option {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -842,6 +886,7 @@
                             <span id="userBalance">0 RIFC</span>
                         </div>
                     </div>
+                    <button class="logout-btn" id="logoutBtn">Cerrar sesión</button>
                 </div>
                 
                 <div class="app-actions">
@@ -870,69 +915,136 @@
             </div>
             
             <div class="app-content">
-                <h2 class="section-title">Minar RifRifanCoins</h2>
-                
-                <div class="mining-container">
-                    <div class="mining-header">
-                        <div class="coin">
-                            <i class="fas fa-coins"></i>
+                <!-- Página de Inicio -->
+                <div class="home-page" id="homePage">
+                    <h2 class="section-title">Minar RifRifanCoins</h2>
+                    
+                    <div class="mining-container">
+                        <div class="mining-header">
+                            <div class="coin">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-stats">
+                            <div class="stat">
+                                <div class="stat-value" id="miningPower">1</div>
+                                <div class="stat-label">RIFC/hora</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="coinsPerHour">1</div>
+                                <div class="stat-label">RIFC/h</div>
+                            </div>
+                        </div>
+                        
+                        <div class="timer" id="miningTimer">06:00:00</div>
+                        <div class="earning-indicator" id="earningIndicator">Ganando: 0 RIFC</div>
+                        
+                        <button class="claim-btn" id="claimBtn" disabled>Reclamar en 06:00:00</button>
+                    </div>
+                    
+                    <h2 class="section-title">Programa de Referidos</h2>
+                    
+                    <div class="referral-stats">
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="totalReferrals">0</div>
+                            <div class="stat-card-label">Referidos Totales</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-value" id="referralEarnings">0 RIFC</div>
+                            <div class="stat-card-label">Ganancias por Referidos</div>
                         </div>
                     </div>
                     
-                    <div class="mining-stats">
-                        <div class="stat">
-                            <div class="stat-value" id="miningPower">1</div>
-                            <div class="stat-label">Potencia</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value" id="coinsPerHour">60</div>
-                            <div class="stat-label">RIFC/h</div>
+                    <div class="referral-link">
+                        <div class="referral-link-title">Tu enlace de referido:</div>
+                        <div class="link-container">
+                            <div class="link-value" id="referralLink">https://rifrifancoin.com/ref/123456</div>
+                            <button class="copy-btn" id="copyLinkBtn">
+                                <i class="fas fa-copy"></i>
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="timer" id="miningTimer">00:05:00</div>
-                    
-                    <button class="claim-btn" id="claimBtn" disabled>Reclamar en 00:05:00</button>
                 </div>
                 
-                <h2 class="section-title">Programa de Referidos</h2>
-                
-                <div class="referral-stats">
+                <!-- Página de Estadísticas -->
+                <div class="stats-container" id="statsPage">
+                    <h2 class="section-title">Estadísticas</h2>
                     <div class="stat-card">
-                        <div class="stat-card-value" id="totalReferrals">0</div>
-                        <div class="stat-card-label">Referidos Totales</div>
+                        <div class="stat-card-value" id="totalMined">0 RIFC</div>
+                        <div class="stat-card-label">Total Minado</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card-value" id="referralEarnings">0 RIFC</div>
-                        <div class="stat-card-label">Ganancias por Referidos</div>
+                        <div class="stat-card-value" id="totalEarned">0 RIFC</div>
+                        <div class="stat-card-label">Total Ganado</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-value" id="miningTime">0 horas</div>
+                        <div class="stat-card-label">Tiempo de Minería</div>
                     </div>
                 </div>
                 
-                <div class="referral-link">
-                    <div class="referral-link-title">Tu enlace de referido:</div>
-                    <div class="link-container">
-                        <div class="link-value" id="referralLink">https://rifrifancoin.com/ref/123456</div>
-                        <button class="copy-btn" id="copyLinkBtn">
-                            <i class="fas fa-copy"></i>
-                        </button>
+                <!-- Página de Recompensas -->
+                <div class="rewards-container" id="rewardsPage">
+                    <h2 class="section-title">Recompensas</h2>
+                    <div class="stat-card">
+                        <div class="stat-card-value">Próximamente</div>
+                        <div class="stat-card-label">Sistema de Recompensas</div>
+                    </div>
+                    <p style="text-align: center; margin-top: 20px;">
+                        Pronto podrás canjear tus RIFC por recompensas exclusivas.
+                    </p>
+                </div>
+                
+                <!-- Página de Ajustes -->
+                <div class="settings-container" id="settingsPage">
+                    <h2 class="section-title">Ajustes</h2>
+                    <div class="settings-option">
+                        <span>Notificaciones</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <span>Sonidos</span>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <span>Modo Oscuro</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <span>Idioma</span>
+                        <span>Español</span>
+                    </div>
+                    <div class="settings-option">
+                        <span>Versión</span>
+                        <span>1.0.0</span>
                     </div>
                 </div>
             </div>
             
             <div class="app-footer">
-                <a class="nav-btn active">
+                <a class="nav-btn active" data-page="home">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span>
                 </a>
-                <a class="nav-btn">
+                <a class="nav-btn" data-page="stats">
                     <i class="fas fa-chart-line"></i>
                     <span>Estadísticas</span>
                 </a>
-                <a class="nav-btn">
+                <a class="nav-btn" data-page="rewards">
                     <i class="fas fa-gift"></i>
                     <span>Recompensas</span>
                 </a>
-                <a class="nav-btn">
+                <a class="nav-btn" data-page="settings">
                     <i class="fas fa-cog"></i>
                     <span>Ajustes</span>
                 </a>
@@ -944,9 +1056,13 @@
         // Variables globales
         let supabase;
         let currentUser = null;
+        let userProfile = null;
         let miningInterval = null;
         let countdownInterval = null;
-        let remainingTime = 300; // 5 minutos en segundos
+        const CLAIM_INTERVAL = 21600; // 6 horas en segundos
+        let remainingTime = CLAIM_INTERVAL;
+        let accumulatedCoins = 0;
+        let lastClaimTime = null;
         
         // Inicializar la aplicación cuando el DOM esté cargado
         document.addEventListener('DOMContentLoaded', async function() {
@@ -974,19 +1090,13 @@
         // Inicializar Supabase
         async function initializeSupabase() {
             try {
-                // Esperar a que la biblioteca de Supabase esté completamente cargada
-                if (typeof window.supabase !== 'undefined') {
-                    // Configuración de Supabase (reemplaza con tus propias credenciales)
-                    const SUPABASE_URL = 'https://rumyuouiurvlhrwwtynl.supabase.co';
-                    const SUPABASE_ANON_KEY = 'sb_publishable_sNNudGCYHyYPygJKrdXE1A_M_JeoEAQ';
-                    
-                    // Crear cliente Supabase
-                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                    console.log('Supabase inicializado correctamente');
-                } else {
-                    console.error('Error: La biblioteca de Supabase no se ha cargado correctamente');
-                    showError(document.getElementById('loginError'), 'Error de configuración. Por favor, recarga la página.');
-                }
+                // Configuración de Supabase (reemplaza con tus propias credenciales)
+                const SUPABASE_URL = 'https://rumyuouiurvlhrwwtynl.supabase.co';
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1bXl1b3VpdXJ2bGhyd3R5bmwiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTY5Mjg4Njk5MiwiZXhwIjoyMDA4NDYyOTkyfQ.4Z5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5';
+                
+                // Crear cliente Supabase
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('Supabase inicializado correctamente');
             } catch (error) {
                 console.error('Error al inicializar Supabase:', error);
                 showError(document.getElementById('loginError'), 'Error de conexión. Por favor, inténtalo más tarde.');
@@ -1050,6 +1160,17 @@
                     }
                 }
             });
+            
+            // Navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const page = e.currentTarget.getAttribute('data-page');
+                    switchPage(page);
+                });
+            });
+            
+            // Cerrar sesión
+            document.getElementById('logoutBtn').addEventListener('click', logout);
         }
         
         // Verificar si hay una sesión activa
@@ -1151,7 +1272,12 @@
                         data: {
                             full_name: name,
                             referral_code: generateReferralCode(),
-                            referred_by: referralCode || null
+                            referred_by: referralCode || null,
+                            balance: 0,
+                            total_mined: 0,
+                            total_earned: 0,
+                            mining_time: 0,
+                            last_claim: new Date().toISOString()
                         }
                     }
                 });
@@ -1180,21 +1306,80 @@
         async function loadUserData() {
             if (!currentUser) return;
             
-            // Actualizar interfaz con datos del usuario
-            const userName = currentUser.user_metadata?.full_name || 'Usuario';
-            const firstLetter = userName.charAt(0).toUpperCase();
-            
-            document.getElementById('userName').textContent = userName;
-            document.getElementById('userAvatar').textContent = firstLetter;
-            
-            // En una implementación real, aquí cargarías los datos desde Supabase
-            document.getElementById('userBalance').textContent = '150 RIFC';
-            document.getElementById('totalReferrals').textContent = '3';
-            document.getElementById('referralEarnings').textContent = '45 RIFC';
-            document.getElementById('referralLink').textContent = `https://rifrifancoin.com/ref/${currentUser.id.substring(0, 8)}`;
-            
-            // Iniciar minería
-            startMining();
+            try {
+                // Obtener el perfil del usuario desde Supabase
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (error) {
+                    console.error('Error al cargar el perfil:', error);
+                    // Crear perfil si no existe
+                    await createUserProfile();
+                    return;
+                }
+                
+                userProfile = profile;
+                
+                // Actualizar interfaz con datos del usuario
+                const userName = currentUser.user_metadata?.full_name || 'Usuario';
+                const firstLetter = userName.charAt(0).toUpperCase();
+                
+                document.getElementById('userName').textContent = userName;
+                document.getElementById('userAvatar').textContent = firstLetter;
+                document.getElementById('userBalance').textContent = `${userProfile.balance || 0} RIFC`;
+                document.getElementById('totalReferrals').textContent = userProfile.total_referrals || 0;
+                document.getElementById('referralEarnings').textContent = `${userProfile.referral_earnings || 0} RIFC`;
+                document.getElementById('referralLink').textContent = `https://rifrifancoin.com/ref/${userProfile.referral_code}`;
+                
+                // Actualizar estadísticas
+                document.getElementById('totalMined').textContent = `${userProfile.total_mined || 0} RIFC`;
+                document.getElementById('totalEarned').textContent = `${userProfile.total_earned || 0} RIFC`;
+                document.getElementById('miningTime').textContent = `${Math.round((userProfile.mining_time || 0) / 3600)} horas`;
+                
+                // Iniciar minería
+                startMining();
+                
+            } catch (error) {
+                console.error('Error al cargar datos del usuario:', error);
+            }
+        }
+        
+        // Crear perfil de usuario
+        async function createUserProfile() {
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .insert([
+                        {
+                            id: currentUser.id,
+                            full_name: currentUser.user_metadata.full_name,
+                            email: currentUser.email,
+                            referral_code: currentUser.user_metadata.referral_code,
+                            referred_by: currentUser.user_metadata.referred_by,
+                            balance: 0,
+                            total_mined: 0,
+                            total_earned: 0,
+                            mining_time: 0,
+                            last_claim: new Date().toISOString(),
+                            total_referrals: 0,
+                            referral_earnings: 0
+                        }
+                    ])
+                    .select();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                userProfile = data[0];
+                await loadUserData();
+                
+            } catch (error) {
+                console.error('Error al crear perfil de usuario:', error);
+            }
         }
         
         // Mostrar la aplicación
@@ -1209,46 +1394,169 @@
             if (miningInterval) clearInterval(miningInterval);
             if (countdownInterval) clearInterval(countdownInterval);
             
-            // Iniciar cuenta regresiva
-            remainingTime = 300; // 5 minutos
-            updateTimer();
+            // Calcular tiempo transcurrido desde el último reclamo
+            const lastClaim = new Date(userProfile.last_claim);
+            const now = new Date();
+            const elapsedSeconds = Math.floor((now - lastClaim) / 1000);
             
-            countdownInterval = setInterval(() => {
-                remainingTime--;
+            // Si ha pasado más de 6 horas, el usuario puede reclamar
+            if (elapsedSeconds >= CLAIM_INTERVAL) {
+                // Puede reclamar inmediatamente
+                remainingTime = 0;
+                accumulatedCoins = 6; // 6 horas = 6 RIFC (1 RIFC por hora)
+                document.getElementById('claimBtn').disabled = false;
+                document.getElementById('claimBtn').textContent = '¡Reclamar 6 RIFC!';
+                document.getElementById('miningTimer').textContent = '00:00:00';
+            } else {
+                // Calcular tiempo restante y coins acumulados
+                remainingTime = CLAIM_INTERVAL - elapsedSeconds;
+                accumulatedCoins = (elapsedSeconds / CLAIM_INTERVAL) * 6;
+                
+                document.getElementById('claimBtn').disabled = true;
                 updateTimer();
                 
-                if (remainingTime <= 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById('claimBtn').disabled = false;
-                    document.getElementById('claimBtn').textContent = '¡Reclamar Recompensa!';
-                }
-            }, 1000);
+                // Iniciar cuenta regresiva
+                countdownInterval = setInterval(() => {
+                    remainingTime--;
+                    accumulatedCoins += 1 / 3600; // 1 RIFC por hora = 1/3600 por segundo
+                    updateTimer();
+                    
+                    if (remainingTime <= 0) {
+                        clearInterval(countdownInterval);
+                        document.getElementById('claimBtn').disabled = false;
+                        document.getElementById('claimBtn').textContent = '¡Reclamar 6 RIFC!';
+                    }
+                }, 1000);
+            }
+            
+            // Actualizar indicador de ganancias
+            updateEarningIndicator();
         }
         
         // Actualizar temporizador
         function updateTimer() {
-            const minutes = Math.floor(remainingTime / 60);
+            const hours = Math.floor(remainingTime / 3600);
+            const minutes = Math.floor((remainingTime % 3600) / 60);
             const seconds = remainingTime % 60;
-            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            document.getElementById('miningTimer').textContent = `00:${formattedTime}`;
-            document.getElementById('claimBtn').textContent = `Reclamar en 00:${formattedTime}`;
+            document.getElementById('miningTimer').textContent = formattedTime;
+            
+            if (remainingTime > 0) {
+                document.getElementById('claimBtn').textContent = `Reclamar en ${formattedTime}`;
+            }
+            
+            // Actualizar indicador de ganancias cada 10 segundos
+            if (remainingTime % 10 === 0) {
+                updateEarningIndicator();
+            }
+        }
+        
+        // Actualizar indicador de ganancias
+        function updateEarningIndicator() {
+            document.getElementById('earningIndicator').textContent = `Ganando: ${accumulatedCoins.toFixed(4)} RIFC`;
         }
         
         // Reclamar coins
-        function claimCoins() {
-            // Simular reclamación de coins
-            document.getElementById('claimBtn').disabled = true;
-            document.getElementById('claimBtn').textContent = 'Reclamando...';
-            
-            setTimeout(() => {
-                // Simular éxito
-                const currentBalance = parseInt(document.getElementById('userBalance').textContent);
-                document.getElementById('userBalance').textContent = (currentBalance + 10) + ' RIFC';
+        async function claimCoins() {
+            try {
+                document.getElementById('claimBtn').disabled = true;
+                document.getElementById('claimBtn').textContent = 'Procesando...';
+                
+                // Calcular recompensa (mínimo 0.0001 RIFC)
+                const reward = Math.max(accumulatedCoins, 0.0001);
+                
+                // Actualizar perfil en Supabase
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .update({
+                        balance: userProfile.balance + reward,
+                        total_mined: userProfile.total_mined + reward,
+                        total_earned: userProfile.total_earned + reward,
+                        mining_time: userProfile.mining_time + (CLAIM_INTERVAL - remainingTime),
+                        last_claim: new Date().toISOString()
+                    })
+                    .eq('id', currentUser.id)
+                    .select();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                userProfile = data[0];
+                
+                // Actualizar interfaz
+                document.getElementById('userBalance').textContent = `${userProfile.balance} RIFC`;
+                document.getElementById('totalMined').textContent = `${userProfile.total_mined} RIFC`;
+                document.getElementById('totalEarned').textContent = `${userProfile.total_earned} RIFC`;
+                document.getElementById('miningTime').textContent = `${Math.round(userProfile.mining_time / 3600)} horas`;
                 
                 // Reiniciar minería
+                accumulatedCoins = 0;
+                remainingTime = CLAIM_INTERVAL;
                 startMining();
-            }, 2000);
+                
+            } catch (error) {
+                console.error('Error al reclamar coins:', error);
+                showError(document.getElementById('loginError'), 'Error al reclamar coins. Intenta nuevamente.');
+                document.getElementById('claimBtn').disabled = false;
+                document.getElementById('claimBtn').textContent = '¡Reclamar Recompensa!';
+            }
+        }
+        
+        // Cambiar de página
+        function switchPage(page) {
+            // Ocultar todas las páginas
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('statsPage').style.display = 'none';
+            document.getElementById('rewardsPage').style.display = 'none';
+            document.getElementById('settingsPage').style.display = 'none';
+            
+            // Mostrar la página seleccionada
+            document.getElementById(`${page}Page`).style.display = 'block';
+            
+            // Actualizar navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelector(`.nav-btn[data-page="${page}"]`).classList.add('active');
+        }
+        
+        // Cerrar sesión
+        async function logout() {
+            try {
+                showLoading(true);
+                
+                const { error } = await supabase.auth.signOut();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                // Limpiar variables
+                currentUser = null;
+                userProfile = null;
+                
+                // Detener intervalos
+                if (miningInterval) clearInterval(miningInterval);
+                if (countdownInterval) clearInterval(countdownInterval);
+                
+                // Mostrar pantalla de autenticación
+                document.getElementById('appContainer').style.display = 'none';
+                document.getElementById('authScreen').style.display = 'flex';
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('registerForm').style.display = 'none';
+                
+                // Limpiar formularios
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                
+            } catch (error) {
+                console.error('Error al cerrar sesión:', error);
+            } finally {
+                showLoading(false);
+            }
         }
         
         // Generar código de referido
@@ -1292,13 +1600,14 @@
         
         // Mostrar/ocultar carga
         function showLoading(show) {
-            // Implementación simplificada para no interferir con la pantalla de carga inicial
             if (show) {
-                document.body.style.opacity = '0.7';
-                document.body.style.pointerEvents = 'none';
+                document.getElementById('loading').style.display = 'flex';
+                document.getElementById('loading').style.opacity = '1';
             } else {
-                document.body.style.opacity = '1';
-                document.body.style.pointerEvents = 'auto';
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
             }
         }
         
