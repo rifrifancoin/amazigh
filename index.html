@@ -329,6 +329,7 @@
         .user-name {
             font-weight: 700;
             font-size: 1rem;
+            color: white;
         }
         
         .balance {
@@ -990,6 +991,43 @@
             animation: spin 1s ease-in-out infinite;
         }
         
+        .rls-solution {
+            background: rgba(241, 196, 15, 0.15);
+            border: 1px solid #f1c40f;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .rls-solution h4 {
+            color: #f1c40f;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rls-solution h4 i {
+            margin-right: 8px;
+        }
+        
+        .rls-solution p {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .rls-solution code {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: block;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+        }
+        
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -1222,6 +1260,32 @@
                 <div class="tagline">Imariren n uẓawan amazigh</div>
             </div>
             
+            <!-- Mensaje de solución RLS -->
+            <div class="rls-solution" id="rls-solution">
+                <h4><i class="fas fa-exclamation-triangle"></i> Solución Requerida</h4>
+                <p>Estás experimentando un error de política de seguridad. Para solucionarlo:</p>
+                <ol>
+                    <li>Ve a tu proyecto de Supabase</li>
+                    <li>Abre el Editor de SQL</li>
+                    <li>Ejecuta el siguiente código:</li>
+                </ol>
+                <code>
+-- Habilita RLS en la tabla profiles
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- Crea políticas para permitir operaciones
+CREATE POLICY "Users can insert their own profile" ON profiles
+FOR INSERT WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Users can update own profile" ON profiles
+FOR UPDATE USING (auth.uid() = id);
+
+CREATE POLICY "Users can view own profile" ON profiles
+FOR SELECT USING (auth.uid() = id);
+                </code>
+                <p>Después de ejecutar estos comandos, recarga esta página e intenta registrarte nuevamente.</p>
+            </div>
+            
             <div class="auth-form" id="login-form">
                 <h2 class="form-title">INICIAR SESIÓN</h2>
                 <div class="input-group">
@@ -1421,8 +1485,8 @@
         
         // Configuración de Supabase
         let supabaseConfig = {
-            url: 'https://amazigh-gamma.vercel.app',
-            key: 'sb_publishable_sNNudGCYHyYPygJKrdXE1A_M_JeoEAQ',
+            url: 'https://ylqfwqaaoandxkggunux.supabase.co',
+            key: 'sb_publishable_r4CBDgSk5gGjLtcPcbKwfA_4hIM29dr',
             enabled: true // Cambiado a true para habilitar por defecto
         };
 
@@ -1631,8 +1695,16 @@
                     ]);
                 
                 if (profileError) {
+                    // Mostrar mensaje específico sobre políticas RLS
+                    if (profileError.message.includes('row-level security policy')) {
+                        document.getElementById('rls-solution').style.display = 'block';
+                        throw new Error('Error de política de seguridad. Por favor, configura las políticas RLS como se indica arriba.');
+                    }
                     throw new Error(profileError.message);
                 }
+                
+                // Ocultar mensaje de solución RLS si se muestra
+                document.getElementById('rls-solution').style.display = 'none';
                 
                 // Procesar referido si existe código
                 if (referralCode) {
